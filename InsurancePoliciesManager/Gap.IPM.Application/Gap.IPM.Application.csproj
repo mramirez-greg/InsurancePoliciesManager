@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gap.IPM.Domain\Gap.IPM.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
