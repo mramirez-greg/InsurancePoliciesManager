@@ -3,9 +3,55 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Presentation", "1.Presentation", "{5F76F5D1-A968-4C7F-989A-C97BA68D64F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Application", "2.Application", "{C4E1A92F-D24C-4082-8D73-880C3CB46EF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Domain", "3.Domain", "{E9B7A6E1-EB01-4B8A-AB7D-02FE57F711A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Infrastructure", "4.Infrastructure", "{EC0BDCDD-8BC4-40A8-9C7E-3858F3C8638F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Test", "5.Test", "{E96F8425-4DAD-42F8-AA2D-C12E74BCDB82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.Application", "Gap.IPM.Application\Gap.IPM.Application.csproj", "{FB475C03-800D-4AD1-A535-F42BA1E9694D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.Domain", "Gap.IPM.Domain\Gap.IPM.Domain.csproj", "{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.Infrastructure", "Gap.IPM.Infrastructure\Gap.IPM.Infrastructure.csproj", "{86CA475C-4551-4B82-84E5-131CFC84CA07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.ApplicationUnitTest", "Gap.IPM.ApplicationUnitTest\Gap.IPM.ApplicationUnitTest.csproj", "{A967894B-2E93-4B5F-8931-5455E6149C90}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB475C03-800D-4AD1-A535-F42BA1E9694D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB475C03-800D-4AD1-A535-F42BA1E9694D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB475C03-800D-4AD1-A535-F42BA1E9694D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB475C03-800D-4AD1-A535-F42BA1E9694D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CA475C-4551-4B82-84E5-131CFC84CA07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CA475C-4551-4B82-84E5-131CFC84CA07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CA475C-4551-4B82-84E5-131CFC84CA07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CA475C-4551-4B82-84E5-131CFC84CA07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A967894B-2E93-4B5F-8931-5455E6149C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A967894B-2E93-4B5F-8931-5455E6149C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A967894B-2E93-4B5F-8931-5455E6149C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A967894B-2E93-4B5F-8931-5455E6149C90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FB475C03-800D-4AD1-A535-F42BA1E9694D} = {C4E1A92F-D24C-4082-8D73-880C3CB46EF6}
+		{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B} = {E9B7A6E1-EB01-4B8A-AB7D-02FE57F711A6}
+		{86CA475C-4551-4B82-84E5-131CFC84CA07} = {EC0BDCDD-8BC4-40A8-9C7E-3858F3C8638F}
+		{A967894B-2E93-4B5F-8931-5455E6149C90} = {E96F8425-4DAD-42F8-AA2D-C12E74BCDB82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4951D452-6970-4E0B-9B3C-65745B95BD75}
