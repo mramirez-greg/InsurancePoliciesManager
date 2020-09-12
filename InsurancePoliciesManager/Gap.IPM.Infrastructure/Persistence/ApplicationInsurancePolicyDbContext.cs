@@ -1,5 +1,6 @@
 ﻿using Gap.IPM.Application.Common.Interfaces;
 using Gap.IPM.Domain.Common;
+using Gap.IPM.Domain.Entities;
 using Gap.IPM.Infrastructure.Identity;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -10,24 +11,29 @@ using System.Data;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace Gap.IPM.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
+    public class ApplicationInsurancePolicyDbContext: DbContext, IApplicationInsurancePolicyDbContext
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         private IDbContextTransaction _currentTransaction;
 
-        public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions,
+        public ApplicationInsurancePolicyDbContext(
+            DbContextOptions<ApplicationInsurancePolicyDbContext> options,
             ICurrentUserService currentUserService,
-            IDateTime dateTime): base(options, operationalStoreOptions)
+            IDateTime dateTime) : base(options)
         {
             _currentUserService = currentUserService;
             _dateTime = dateTime;
         }
+        
+        //Database Model for Gap Insurance Application
+        public DbSet<CoverageType> CoverageType { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<InsurancePolicy> InsurancePolicy { get; set; }
+        public DbSet<CustomerInsurancePolicy> CustomerInsurancePolicy { get; set; }
+
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

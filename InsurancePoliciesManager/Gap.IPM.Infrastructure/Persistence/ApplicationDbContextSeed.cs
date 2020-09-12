@@ -1,4 +1,5 @@
-﻿using Gap.IPM.Infrastructure.Identity;
+﻿using Gap.IPM.Domain.Entities;
+using Gap.IPM.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,10 +18,45 @@ namespace Gap.IPM.Infrastructure.Persistence
             }
         }
 
-        //TODO create seed for Gap Application
-        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+        //TODO create seed for Gap Insurance Application
+        public static async Task SeedSampleDataAsync(ApplicationInsurancePolicyDbContext context)
         {
-            await context.SaveChangesAsync();
+            await SeedCoverageTypeAsync(context);
+            await SeedCustomerTypeAsync(context);
+        }
+
+
+        private static async Task SeedCoverageTypeAsync(ApplicationInsurancePolicyDbContext context)
+        {
+            if (!context.CoverageType.Any())
+            {
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Terremoto" });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Incendio" });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Robo" });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Pérdida" });
+
+                await context.SaveChangesAsync();
+            }
+        }
+        private static async Task SeedCustomerTypeAsync(ApplicationInsurancePolicyDbContext context)
+        {
+            if (!context.Customer.Any())
+            {
+                context.Customer.Add(new Customer
+                {
+                    CustomerId = "71123456",
+                    FirstName = "Mauricio",
+                    LastName = "Ramirez",
+                    Address = "Avenida simpre viva 742",
+                    Phone = "3001234567",
+                    City = "Springfield",
+                    Region = "Unknown",
+                    Country = "United States",
+                    PostalCode = "055450"
+                });
+                await context.SaveChangesAsync();
+            }
+           
         }
     }
 }

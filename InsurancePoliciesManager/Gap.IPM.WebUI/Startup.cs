@@ -1,6 +1,7 @@
 using Gap.IPM.Application;
 using Gap.IPM.Application.Common.Interfaces;
 using Gap.IPM.Infrastructure;
+using Gap.IPM.Infrastructure.Identity;
 using Gap.IPM.Infrastructure.Persistence;
 using Gap.IPM.WebUI.Filters;
 using Gap.IPM.WebUI.Services;
@@ -36,7 +37,10 @@ namespace Gap.IPM.WebUI
             services.AddHttpContextAccessor();
 
             services.AddHealthChecks()
-                .AddDbContextCheck<ApplicationDbContext>();
+                .AddDbContextCheck<ApplicationIndentityDbContext>();
+
+            services.AddHealthChecks()
+               .AddDbContextCheck<ApplicationInsurancePolicyDbContext>();
 
             services.AddControllersWithViews(options =>
              options.Filters.Add(new ApiExceptionFilter()));

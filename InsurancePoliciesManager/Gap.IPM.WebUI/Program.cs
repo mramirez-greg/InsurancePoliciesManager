@@ -23,17 +23,23 @@ namespace Gap.IPM.WebUI
 
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var ipmIdentityContext = services.GetRequiredService<ApplicationIndentityDbContext>();
+                    var ipmApplicationContext = services.GetRequiredService<ApplicationInsurancePolicyDbContext>();
 
-                    if (context.Database.IsSqlServer())
+                    if (ipmIdentityContext.Database.IsSqlServer())
                     {
-                        context.Database.Migrate();
+                        ipmIdentityContext.Database.Migrate();
+                    }
+                    if (ipmApplicationContext.Database.IsSqlServer())
+                    {
+                        ipmApplicationContext.Database.Migrate();
                     }
 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var ipmManager = services.GetRequiredService<ApplicationInsurancePolicyDbContext>();
 
                     await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager);
-                    await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(ipmManager);
                 }
                 catch (Exception ex)
                 {

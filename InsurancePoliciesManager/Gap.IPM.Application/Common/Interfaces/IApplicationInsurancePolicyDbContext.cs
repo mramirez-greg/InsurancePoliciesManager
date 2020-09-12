@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Gap.IPM.Application.Common.Interfaces
 {
-    public interface IApplicationDbContext
+    public interface IApplicationInsurancePolicyDbContext
     {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
