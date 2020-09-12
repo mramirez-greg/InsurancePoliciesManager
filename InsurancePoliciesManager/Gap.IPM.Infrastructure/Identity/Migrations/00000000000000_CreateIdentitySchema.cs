@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Gap.IPM.WebUI.Data.Migrations
+namespace Gap.IPM.Infrastructure.Identity.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

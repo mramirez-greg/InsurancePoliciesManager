@@ -15,23 +15,30 @@ namespace Gap.IPM.Infrastructure
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase("GapIPMDB"));
+                services.AddDbContext<ApplicationIndentityDbContext>(options =>
+                    options.UseInMemoryDatabase("GapIPMIdentityMDB"));
+                services.AddDbContext<ApplicationInsurancePolicyDbContext>(options =>
+                   options.UseInMemoryDatabase("GapIPMDB"));
             }
             else
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
+                services.AddDbContext<ApplicationIndentityDbContext>(options =>
                     options.UseSqlServer(
                         configuration.GetConnectionString("IPMIdentityDbConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                        b => b.MigrationsAssembly(typeof(ApplicationIndentityDbContext).Assembly.FullName)));
+                services.AddDbContext<ApplicationInsurancePolicyDbContext>(options =>
+                    options.UseSqlServer(
+                        configuration.GetConnectionString("IPMDbConnection"),
+                        b => b.MigrationsAssembly(typeof(ApplicationInsurancePolicyDbContext).Assembly.FullName)));
             }
 
-            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IApplicationInsurancePolicyDbContext>(provider => provider.GetService<ApplicationInsurancePolicyDbContext>());
+            
             services.AddDefaultIdentity<ApplicationUser>()
-                   .AddEntityFrameworkStores<ApplicationDbContext>();
+                   .AddEntityFrameworkStores<ApplicationIndentityDbContext>();
             
             services.AddIdentityServer()
-               .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+               .AddApiAuthorization<ApplicationUser, ApplicationIndentityDbContext>();
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
