@@ -1,6 +1,6 @@
 using System;
 
-namespace Gap.IPM.WebUI
+namespace Gap.IPM.Application.WeatherForecasts.Queries.GetWeatherForecasts
 {
     public class WeatherForecast
     {
