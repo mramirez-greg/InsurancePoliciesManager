@@ -11,7 +11,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                 name: "CoverageType",
                 columns: table => new
                 {
-                    CovergaeTypeId = table.Column<int>(nullable: false)
+                    CoverageTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
@@ -22,7 +22,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoverageType", x => x.CovergaeTypeId);
+                    table.PrimaryKey("PK_CoverageType", x => x.CoverageTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,24 +60,23 @@ namespace Gap.IPM.Infrastructure.Migrations
                     LastModified = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(maxLength: 200, nullable: true),
-                    CovergaeTypeId = table.Column<int>(nullable: false),
-                    Coverge = table.Column<int>(nullable: false),
+                    CoverageTypeId = table.Column<int>(nullable: false),
+                    Coverage = table.Column<int>(nullable: false),
                     CoverageStart = table.Column<DateTime>(nullable: false),
                     CoveragePeriod = table.Column<int>(nullable: false),
                     PolicyValue = table.Column<long>(nullable: false),
                     RiksType = table.Column<int>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
-                    CoverageTypeCovergaeTypeId = table.Column<int>(nullable: true)
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InsurancePolicy", x => x.InsurancePolicyId);
                     table.ForeignKey(
-                        name: "FK_InsurancePolicy_CoverageType_CoverageTypeCovergaeTypeId",
-                        column: x => x.CoverageTypeCovergaeTypeId,
+                        name: "FK_InsurancePolicy_CoverageType_CoverageTypeId",
+                        column: x => x.CoverageTypeId,
                         principalTable: "CoverageType",
-                        principalColumn: "CovergaeTypeId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CoverageTypeId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,9 +122,9 @@ namespace Gap.IPM.Infrastructure.Migrations
                 column: "InsurancePolicyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InsurancePolicy_CoverageTypeCovergaeTypeId",
+                name: "IX_InsurancePolicy_CoverageTypeId",
                 table: "InsurancePolicy",
-                column: "CoverageTypeCovergaeTypeId");
+                column: "CoverageTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

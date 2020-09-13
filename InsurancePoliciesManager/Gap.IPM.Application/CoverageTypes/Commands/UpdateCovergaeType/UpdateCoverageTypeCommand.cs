@@ -10,7 +10,7 @@ namespace Gap.IPM.Application.CoverageTypes.Commands.UpdateCovergaeType
 {
     public class UpdateCoverageTypeCommand: IRequest
     {
-        public int CovergaeTypeId { get; set; }
+        public int CoverageTypeId { get; set; }
         public String CoverageTypeName { get; set; }
 
     }
@@ -24,11 +24,11 @@ namespace Gap.IPM.Application.CoverageTypes.Commands.UpdateCovergaeType
 
         public async Task<Unit> Handle(UpdateCoverageTypeCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.CoverageType.FindAsync(request.CovergaeTypeId);
+            var entity = await _context.CoverageType.FindAsync(request.CoverageTypeId);
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(CoverageType), request.CovergaeTypeId);
+                throw new NotFoundException(nameof(CoverageType), request.CoverageTypeId);
             }
 
             entity.CoverageTypeName = request.CoverageTypeName;

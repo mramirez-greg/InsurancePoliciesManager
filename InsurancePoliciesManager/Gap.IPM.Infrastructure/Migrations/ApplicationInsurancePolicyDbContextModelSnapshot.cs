@@ -21,7 +21,7 @@ namespace Gap.IPM.Infrastructure.Migrations
 
             modelBuilder.Entity("Gap.IPM.Domain.Entities.CoverageType", b =>
                 {
-                    b.Property<int>("CovergaeTypeId")
+                    b.Property<int>("CoverageTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -46,7 +46,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CovergaeTypeId");
+                    b.HasKey("CoverageTypeId");
 
                     b.ToTable("CoverageType");
                 });
@@ -155,19 +155,16 @@ namespace Gap.IPM.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Coverage")
+                        .HasColumnType("int");
+
                     b.Property<int>("CoveragePeriod")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CoverageStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CoverageTypeCovergaeTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CovergaeTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Coverge")
+                    b.Property<int>("CoverageTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
@@ -201,7 +198,7 @@ namespace Gap.IPM.Infrastructure.Migrations
 
                     b.HasKey("InsurancePolicyId");
 
-                    b.HasIndex("CoverageTypeCovergaeTypeId");
+                    b.HasIndex("CoverageTypeId");
 
                     b.ToTable("InsurancePolicy");
                 });
@@ -225,7 +222,9 @@ namespace Gap.IPM.Infrastructure.Migrations
                 {
                     b.HasOne("Gap.IPM.Domain.Entities.CoverageType", "CoverageType")
                         .WithMany()
-                        .HasForeignKey("CoverageTypeCovergaeTypeId");
+                        .HasForeignKey("CoverageTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

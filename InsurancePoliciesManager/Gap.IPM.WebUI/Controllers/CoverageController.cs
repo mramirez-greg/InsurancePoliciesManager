@@ -3,17 +3,14 @@ using Gap.IPM.Application.CoverageTypes.Commands.DeleteCoverageType;
 using Gap.IPM.Application.CoverageTypes.Commands.UpdateCovergaeType;
 using Gap.IPM.Application.CoverageTypes.Queries.GetCoverageTypes;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Gap.IPM.WebUI.Controllers
 {
-
     public class CoverageController : ApiController
-    {
-        // GET: api/<CreateCoverageController>
+    {       
         [HttpGet]
         public async Task<ActionResult<CoverageTypesListVm>> Get()
         {
@@ -26,12 +23,11 @@ namespace Gap.IPM.WebUI.Controllers
         {
             return await Mediator.Send(command);
         }
-
        
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, UpdateCoverageTypeCommand command)
         {
-            if (id != command.CovergaeTypeId)
+            if (id != command.CoverageTypeId)
             {
                 return BadRequest();
             }
@@ -44,7 +40,7 @@ namespace Gap.IPM.WebUI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteCoverageTypeCommand { CovergaeTypeId = id });
+            await Mediator.Send(new DeleteCoverageTypeCommand { CoverageTypeId = id });
 
             return NoContent();
         }

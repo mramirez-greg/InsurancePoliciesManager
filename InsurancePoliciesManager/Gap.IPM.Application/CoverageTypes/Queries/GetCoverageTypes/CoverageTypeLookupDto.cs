@@ -13,7 +13,7 @@ namespace Gap.IPM.Application.CoverageTypes.Queries.GetCoverageTypes
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CoverageType, CoverageTypeLookupDto>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.CovergaeTypeId))
+                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.CoverageTypeId))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.CoverageTypeName));
         }
     }

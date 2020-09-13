@@ -10,8 +10,8 @@ namespace Gap.IPM.Domain.Entities
         public Int64 InsurancePolicyId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int CovergaeTypeId { get; set; }
-        public int Coverge { get; set; }
+        public int CoverageTypeId { get; set; }
+        public int Coverage { get; set; }
         public DateTime CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
         public Int64 PolicyValue { get; set; }

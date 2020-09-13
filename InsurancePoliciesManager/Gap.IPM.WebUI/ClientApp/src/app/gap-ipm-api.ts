@@ -237,6 +237,229 @@ export class CoverageClient implements ICoverageClient {
     }
 }
 
+export interface IInsurancePolicyClient {
+    get(): Observable<InsurancePoliciesListVm>;
+    create(command: CreateInsurancePolicyCommand): Observable<number>;
+    update(id: number, command: UpdateInsurancePolicyCommand): Observable<FileResponse>;
+    delete(id: number): Observable<FileResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class InsurancePolicyClient implements IInsurancePolicyClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    get(): Observable<InsurancePoliciesListVm> {
+        let url_ = this.baseUrl + "/api/InsurancePolicy";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<InsurancePoliciesListVm>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<InsurancePoliciesListVm>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<InsurancePoliciesListVm> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = InsurancePoliciesListVm.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<InsurancePoliciesListVm>(<any>null);
+    }
+
+    create(command: CreateInsurancePolicyCommand): Observable<number> {
+        let url_ = this.baseUrl + "/api/InsurancePolicy";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<number>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<number>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<number>(<any>null);
+    }
+
+    update(id: number, command: UpdateInsurancePolicyCommand): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/InsurancePolicy/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse>(<any>null);
+    }
+
+    delete(id: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/InsurancePolicy/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse>(<any>null);
+    }
+}
+
 export interface IWeatherForecastClient {
     get(): Observable<WeatherForecast[]>;
 }
@@ -428,7 +651,7 @@ export interface ICreateCoverageTypeCommand {
 }
 
 export class UpdateCoverageTypeCommand implements IUpdateCoverageTypeCommand {
-    covergaeTypeId?: number;
+    coverageTypeId?: number;
     coverageTypeName?: string | undefined;
 
     constructor(data?: IUpdateCoverageTypeCommand) {
@@ -442,7 +665,7 @@ export class UpdateCoverageTypeCommand implements IUpdateCoverageTypeCommand {
 
     init(_data?: any) {
         if (_data) {
-            this.covergaeTypeId = _data["covergaeTypeId"];
+            this.coverageTypeId = _data["coverageTypeId"];
             this.coverageTypeName = _data["coverageTypeName"];
         }
     }
@@ -456,15 +679,270 @@ export class UpdateCoverageTypeCommand implements IUpdateCoverageTypeCommand {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["covergaeTypeId"] = this.covergaeTypeId;
+        data["coverageTypeId"] = this.coverageTypeId;
         data["coverageTypeName"] = this.coverageTypeName;
         return data; 
     }
 }
 
 export interface IUpdateCoverageTypeCommand {
-    covergaeTypeId?: number;
+    coverageTypeId?: number;
     coverageTypeName?: string | undefined;
+}
+
+export class InsurancePoliciesListVm implements IInsurancePoliciesListVm {
+    insurancePolicies?: InsurancePolicyLookupDto[] | undefined;
+
+    constructor(data?: IInsurancePoliciesListVm) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["insurancePolicies"])) {
+                this.insurancePolicies = [] as any;
+                for (let item of _data["insurancePolicies"])
+                    this.insurancePolicies!.push(InsurancePolicyLookupDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): InsurancePoliciesListVm {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsurancePoliciesListVm();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.insurancePolicies)) {
+            data["insurancePolicies"] = [];
+            for (let item of this.insurancePolicies)
+                data["insurancePolicies"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IInsurancePoliciesListVm {
+    insurancePolicies?: InsurancePolicyLookupDto[] | undefined;
+}
+
+export class InsurancePolicyLookupDto implements IInsurancePolicyLookupDto {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    coverageTypeId?: number;
+    coverageTypeName?: string | undefined;
+    coverage?: number;
+    coverageStart?: Date;
+    coveragePeriod?: number;
+    policyValue?: number;
+    riksType?: string | undefined;
+
+    constructor(data?: IInsurancePolicyLookupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.coverageTypeId = _data["coverageTypeId"];
+            this.coverageTypeName = _data["coverageTypeName"];
+            this.coverage = _data["coverage"];
+            this.coverageStart = _data["coverageStart"] ? new Date(_data["coverageStart"].toString()) : <any>undefined;
+            this.coveragePeriod = _data["coveragePeriod"];
+            this.policyValue = _data["policyValue"];
+            this.riksType = _data["riksType"];
+        }
+    }
+
+    static fromJS(data: any): InsurancePolicyLookupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InsurancePolicyLookupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["coverageTypeId"] = this.coverageTypeId;
+        data["coverageTypeName"] = this.coverageTypeName;
+        data["coverage"] = this.coverage;
+        data["coverageStart"] = this.coverageStart ? this.coverageStart.toISOString() : <any>undefined;
+        data["coveragePeriod"] = this.coveragePeriod;
+        data["policyValue"] = this.policyValue;
+        data["riksType"] = this.riksType;
+        return data; 
+    }
+}
+
+export interface IInsurancePolicyLookupDto {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    coverageTypeId?: number;
+    coverageTypeName?: string | undefined;
+    coverage?: number;
+    coverageStart?: Date;
+    coveragePeriod?: number;
+    policyValue?: number;
+    riksType?: string | undefined;
+}
+
+export class CreateInsurancePolicyCommand implements ICreateInsurancePolicyCommand {
+    name?: string | undefined;
+    description?: string | undefined;
+    coverageTypeId?: number;
+    coverage?: number;
+    coverageStart?: Date;
+    coveragePeriod?: number;
+    policyValue?: number;
+    riksType?: RiskType;
+
+    constructor(data?: ICreateInsurancePolicyCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.coverageTypeId = _data["coverageTypeId"];
+            this.coverage = _data["coverage"];
+            this.coverageStart = _data["coverageStart"] ? new Date(_data["coverageStart"].toString()) : <any>undefined;
+            this.coveragePeriod = _data["coveragePeriod"];
+            this.policyValue = _data["policyValue"];
+            this.riksType = _data["riksType"];
+        }
+    }
+
+    static fromJS(data: any): CreateInsurancePolicyCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateInsurancePolicyCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["coverageTypeId"] = this.coverageTypeId;
+        data["coverage"] = this.coverage;
+        data["coverageStart"] = this.coverageStart ? this.coverageStart.toISOString() : <any>undefined;
+        data["coveragePeriod"] = this.coveragePeriod;
+        data["policyValue"] = this.policyValue;
+        data["riksType"] = this.riksType;
+        return data; 
+    }
+}
+
+export interface ICreateInsurancePolicyCommand {
+    name?: string | undefined;
+    description?: string | undefined;
+    coverageTypeId?: number;
+    coverage?: number;
+    coverageStart?: Date;
+    coveragePeriod?: number;
+    policyValue?: number;
+    riksType?: RiskType;
+}
+
+export enum RiskType {
+    Low = 0,
+    Medium = 1,
+    MediumHigh = 2,
+    High = 3,
+}
+
+export class UpdateInsurancePolicyCommand implements IUpdateInsurancePolicyCommand {
+    insurancePolicyId?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    coverageTypeId?: number;
+    coverage?: number;
+    coverageStart?: Date;
+    coveragePeriod?: number;
+    policyValue?: number;
+    riksType?: RiskType;
+
+    constructor(data?: IUpdateInsurancePolicyCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.insurancePolicyId = _data["insurancePolicyId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.coverageTypeId = _data["coverageTypeId"];
+            this.coverage = _data["coverage"];
+            this.coverageStart = _data["coverageStart"] ? new Date(_data["coverageStart"].toString()) : <any>undefined;
+            this.coveragePeriod = _data["coveragePeriod"];
+            this.policyValue = _data["policyValue"];
+            this.riksType = _data["riksType"];
+        }
+    }
+
+    static fromJS(data: any): UpdateInsurancePolicyCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateInsurancePolicyCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["insurancePolicyId"] = this.insurancePolicyId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["coverageTypeId"] = this.coverageTypeId;
+        data["coverage"] = this.coverage;
+        data["coverageStart"] = this.coverageStart ? this.coverageStart.toISOString() : <any>undefined;
+        data["coveragePeriod"] = this.coveragePeriod;
+        data["policyValue"] = this.policyValue;
+        data["riksType"] = this.riksType;
+        return data; 
+    }
+}
+
+export interface IUpdateInsurancePolicyCommand {
+    insurancePolicyId?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    coverageTypeId?: number;
+    coverage?: number;
+    coverageStart?: Date;
+    coveragePeriod?: number;
+    policyValue?: number;
+    riksType?: RiskType;
 }
 
 export class WeatherForecast implements IWeatherForecast {

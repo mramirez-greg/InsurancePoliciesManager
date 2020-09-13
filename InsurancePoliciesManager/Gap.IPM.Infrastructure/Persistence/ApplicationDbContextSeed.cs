@@ -1,6 +1,7 @@
 ﻿using Gap.IPM.Domain.Entities;
 using Gap.IPM.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,10 +31,10 @@ namespace Gap.IPM.Infrastructure.Persistence
         {
             if (!context.CoverageType.Any())
             {
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Terremoto",IsActive=true });
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Incendio", IsActive = true });
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Robo", IsActive = true });
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Pérdida", IsActive = true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Terremoto",Created= DateTime.Now, CreatedBy="mramriez", IsActive=true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Incendio", Created = DateTime.Now, CreatedBy = "mramriez", IsActive = true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Robo", Created = DateTime.Now, CreatedBy = "mramriez", IsActive = true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Pérdida", Created = DateTime.Now, CreatedBy = "mramriez", IsActive = true });
 
                 await context.SaveChangesAsync();
             }

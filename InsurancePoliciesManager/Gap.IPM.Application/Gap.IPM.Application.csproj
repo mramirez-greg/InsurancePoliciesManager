@@ -20,10 +20,6 @@
   <ItemGroup>
     <Folder Include="Customers\Commands\" />
     <Folder Include="Customers\Queries\" />
-    <Folder Include="InsurancePolicies\Commands\CreateInsurancePolicy\" />
-    <Folder Include="InsurancePolicies\Commands\DeleteInsurancePolicy\" />
-    <Folder Include="InsurancePolicies\Commands\UpdateInsurancePolicy\" />
-    <Folder Include="InsurancePolicies\Queries\GetInsurancePolicies\" />
   </ItemGroup>
 
 </Project>

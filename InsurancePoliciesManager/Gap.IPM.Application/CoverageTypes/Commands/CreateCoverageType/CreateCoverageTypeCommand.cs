@@ -33,7 +33,7 @@ namespace Gap.IPM.Application.CoverageTypes.Commands.CreateCoverageType
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return entity.CovergaeTypeId;
+            return entity.CoverageTypeId;
         }
 
     }

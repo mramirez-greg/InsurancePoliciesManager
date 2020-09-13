@@ -133,6 +133,133 @@
         }
       }
     },
+    "/api/InsurancePolicy": {
+      "get": {
+        "tags": [
+          "InsurancePolicy"
+        ],
+        "operationId": "InsurancePolicy_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsurancePoliciesListVm"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "InsurancePolicy"
+        ],
+        "operationId": "InsurancePolicy_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInsurancePolicyCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InsurancePolicy/{id}": {
+      "put": {
+        "tags": [
+          "InsurancePolicy"
+        ],
+        "operationId": "InsurancePolicy_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInsurancePolicyCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "InsurancePolicy"
+        ],
+        "operationId": "InsurancePolicy_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -200,13 +327,166 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "covergaeTypeId": {
+          "coverageTypeId": {
             "type": "integer",
             "format": "int32"
           },
           "coverageTypeName": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "InsurancePoliciesListVm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "insurancePolicies": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/InsurancePolicyLookupDto"
+            }
+          }
+        }
+      },
+      "InsurancePolicyLookupDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "coverageTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverageTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "coverage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverageStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "coveragePeriod": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "policyValue": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "riksType": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateInsurancePolicyCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "coverageTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverageStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "coveragePeriod": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "policyValue": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "riksType": {
+            "$ref": "#/components/schemas/RiskType"
+          }
+        }
+      },
+      "RiskType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Low",
+          "Medium",
+          "MediumHigh",
+          "High"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "UpdateInsurancePolicyCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "insurancePolicyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "coverageTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverageStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "coveragePeriod": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "policyValue": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "riksType": {
+            "$ref": "#/components/schemas/RiskType"
           }
         }
       },
