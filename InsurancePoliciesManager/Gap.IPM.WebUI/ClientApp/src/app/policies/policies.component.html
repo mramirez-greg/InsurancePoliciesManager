@@ -1,1 +1,78 @@
-<p>policies works!</p>
+<h1 id="tableLabel">Gestión de pólizas</h1>
+
+<p>Desde este espacio puede gestionar las pólias, agregar, modificar, eliminar</p>
+
+
+<table class='table table-striped' aria-labell  edby="tableLabel">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo de Cobertura</th>
+      <th>Cobertura</th>
+      <th>Inicio</th>
+      <th>Periodo</th>
+      <th>Valor</th>
+      <th>Riesgo</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <!--<td>{{ forecast.date }}</td>-->
+      <td>Test </td>
+      <td>Test 1</td>
+      <td>Test 2</td>
+      <td>Test 3</td>
+      <td>Test 4</td>
+      <td>Test 5</td>
+      <td>Test 6</td>
+      <td>
+        <button  (click)="showPolicyDetailsModal(policyDetailsModalTemplate)"
+                class="btn btn-default btn-xs" role="button">
+          <fa-icon [icon]="faEllipsisH"></fa-icon>
+        </button>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #policyDetailsModalTemplate>
+  <div class="modal-header clearfix">
+    <h4 class="modal-title float-left">Item Details</h4>
+    <button type="button" class="close float-right" aria-label="Close" (click)="policyDetailsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form">
+      <div class="form-group">
+        <label for="list">Poliza</label>
+        <!--<select class="form-control" [(ngModel)]="itemDetailsEditor.listId">
+          <option [ngValue]="list.id" *ngFor="let list of vm.lists">{{ list.title }}</option>
+        </select>-->
+      </div>
+      <div class="form-group">
+        <label for="priority">Priority</label>
+        <select class="form-control">
+          <option [ngValue]="1">Test</option>
+        </select> 
+      </div>
+      <div class="form-group">
+        <label for="note">Descripción</label>
+        <textarea id="note" class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="clearfix">
+      <div class="float-left">
+        <button class="btn btn-default text-danger" (click)="policyDetailsModalRef.hide()">Eliminar</button>
+      </div>
+      <div class="float-right">
+        <button class="btn btn-default" (click)="policyDetailsModalRef.hide()">Cancel</button>
+        <button class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
