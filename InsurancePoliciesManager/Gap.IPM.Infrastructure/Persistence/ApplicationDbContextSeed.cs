@@ -30,10 +30,10 @@ namespace Gap.IPM.Infrastructure.Persistence
         {
             if (!context.CoverageType.Any())
             {
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Terremoto" });
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Incendio" });
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Robo" });
-                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Pérdida" });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Terremoto",IsActive=true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Incendio", IsActive = true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Robo", IsActive = true });
+                context.CoverageType.Add(new CoverageType {CoverageTypeName = "Pérdida", IsActive = true });
 
                 await context.SaveChangesAsync();
             }

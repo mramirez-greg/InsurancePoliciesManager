@@ -4,14 +4,16 @@ using Gap.IPM.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Gap.IPM.Infrastructure.Persistence.Migrations
+namespace Gap.IPM.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationInsurancePolicyDbContext))]
-    partial class ApplicationInsurancePolicyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200913022150_GapIPMMigration")]
+    partial class GapIPMMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,6 +38,9 @@ namespace Gap.IPM.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");

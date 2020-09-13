@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Gap.IPM.Infrastructure.Persistence.Migrations
+namespace Gap.IPM.Infrastructure.Migrations
 {
-    public partial class InitialGapIPMInitalMigration : Migration
+    public partial class GapIPMMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace Gap.IPM.Infrastructure.Persistence.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<string>(nullable: true),
                     LastModified = table.Column<DateTime>(nullable: true),
-                    CoverageTypeName = table.Column<string>(maxLength: 200, nullable: false)
+                    CoverageTypeName = table.Column<string>(maxLength: 200, nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

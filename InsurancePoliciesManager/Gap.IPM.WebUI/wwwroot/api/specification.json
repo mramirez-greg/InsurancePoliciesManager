@@ -6,6 +6,133 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/Coverage": {
+      "get": {
+        "tags": [
+          "Coverage"
+        ],
+        "operationId": "Coverage_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoverageTypesListVm"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Coverage"
+        ],
+        "operationId": "Coverage_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCoverageTypeCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Coverage/{id}": {
+      "put": {
+        "tags": [
+          "Coverage"
+        ],
+        "operationId": "Coverage_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCoverageTypeCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Coverage"
+        ],
+        "operationId": "Coverage_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -32,6 +159,57 @@
   },
   "components": {
     "schemas": {
+      "CoverageTypesListVm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "coverageTypes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CoverageTypeLookupDto"
+            }
+          }
+        }
+      },
+      "CoverageTypeLookupDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateCoverageTypeCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "coverageTypeName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateCoverageTypeCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "covergaeTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coverageTypeName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
       "WeatherForecast": {
         "type": "object",
         "additionalProperties": false,

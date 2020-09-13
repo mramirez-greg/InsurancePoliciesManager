@@ -9,5 +9,6 @@ namespace Gap.IPM.Domain.Entities
         [Key]
         public int CovergaeTypeId { get; set; }
         public String CoverageTypeName { get; set; }
+        public bool IsActive { get; set; }
     }
 }
