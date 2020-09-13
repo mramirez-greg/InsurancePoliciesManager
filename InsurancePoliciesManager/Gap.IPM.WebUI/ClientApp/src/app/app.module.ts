@@ -13,6 +13,7 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { PoliciesComponent } from './policies/policies.component';
+import { CustomersComponent } from './customers/customers.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PoliciesComponent } from './policies/policies.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    PoliciesComponent
+    PoliciesComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
