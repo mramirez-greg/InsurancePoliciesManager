@@ -1,6 +1,7 @@
 ﻿using Gap.IPM.Application.Customers.Commands.CreateCustomer;
 using Gap.IPM.Application.Customers.Commands.UpdateCustomer;
 using Gap.IPM.Application.Customers.Queries.GetCustomer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Gap.IPM.WebUI.Controllers
 {
-
+    [Authorize]
     public class CustomerController : ApiController
     {
 

@@ -2,6 +2,7 @@
 using Gap.IPM.Application.CoverageTypes.Commands.DeleteCoverageType;
 using Gap.IPM.Application.CoverageTypes.Commands.UpdateCovergaeType;
 using Gap.IPM.Application.CoverageTypes.Queries.GetCoverageTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Gap.IPM.WebUI.Controllers
 {
+    [Authorize]
     public class CoverageTypeController : ApiController
     {       
         [HttpGet]

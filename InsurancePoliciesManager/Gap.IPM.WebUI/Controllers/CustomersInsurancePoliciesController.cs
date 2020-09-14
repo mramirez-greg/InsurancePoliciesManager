@@ -1,6 +1,7 @@
 ﻿using Gap.IPM.Application.CustomersInsurancePolicies.Commands.CreateCustomerInsurancePolicy;
 using Gap.IPM.Application.CustomersInsurancePolicies.Commands.UpdateCustomerInsurancePolicy;
 using Gap.IPM.Application.CustomersInsurancePolicies.Queries.GetCustomerInsurancePolicy;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Gap.IPM.WebUI.Controllers
 {
+    [Authorize]
     public class CustomersInsurancePoliciesController : ApiController
     {
         [HttpGet]
