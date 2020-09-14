@@ -228,6 +228,102 @@
         }
       }
     },
+    "/api/CustomersInsurancePolicies": {
+      "get": {
+        "tags": [
+          "CustomersInsurancePolicies"
+        ],
+        "operationId": "CustomersInsurancePolicies_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerInsurancePolicyListVm"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CustomersInsurancePolicies"
+        ],
+        "operationId": "CustomersInsurancePolicies_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerInsurancePolicyCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CustomersInsurancePolicies/{id}": {
+      "put": {
+        "tags": [
+          "CustomersInsurancePolicies"
+        ],
+        "operationId": "CustomersInsurancePolicies_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerInsurancePolicyCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/InsurancePolicy": {
       "get": {
         "tags": [
@@ -292,7 +388,7 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             },
             "x-position": 1
           }
@@ -568,6 +664,102 @@
           "postalCode": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "CustomerInsurancePolicyListVm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customerInsurancePolicies": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CustomerInsurancePolicyLookupDto"
+            }
+          }
+        }
+      },
+      "CustomerInsurancePolicyLookupDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customerInsurancePolicyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "insurancePolicyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "insurancePolicyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/CustomerInsurancePolicyStatus"
+          },
+          "statusDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CustomerInsurancePolicyStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Assigned",
+          "Cancelled"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "CreateCustomerInsurancePolicyCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "insurancePolicyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CustomerInsurancePolicyStatus"
+          },
+          "statusDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UpdateCustomerInsurancePolicyCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customerInsurancePolicyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CustomerInsurancePolicyStatus"
+          },
+          "statusDate": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

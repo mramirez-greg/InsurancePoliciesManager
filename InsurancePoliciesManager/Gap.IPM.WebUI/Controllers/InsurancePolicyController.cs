@@ -3,6 +3,7 @@ using Gap.IPM.Application.InsurancePolicies.Commands.DeleteInsurancePolicy;
 using Gap.IPM.Application.InsurancePolicies.Commands.UpdateInsurancePolicy;
 using Gap.IPM.Application.InsurancePolicies.Queries.GetInsurancePolicies;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,7 +26,7 @@ namespace Gap.IPM.WebUI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, UpdateInsurancePolicyCommand command)
+        public async Task<ActionResult> Update(Int64 id, UpdateInsurancePolicyCommand command)
         {
             if (id != command.InsurancePolicyId)
             {
