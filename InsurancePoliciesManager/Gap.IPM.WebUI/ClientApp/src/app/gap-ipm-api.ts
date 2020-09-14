@@ -1335,6 +1335,7 @@ export class CustomerInsurancePolicyLookupDto implements ICustomerInsurancePolic
     insurancePolicyId?: number;
     insurancePolicyName?: string | undefined;
     status?: CustomerInsurancePolicyStatus;
+    statusName?: string | undefined;
     statusDate?: Date;
 
     constructor(data?: ICustomerInsurancePolicyLookupDto) {
@@ -1354,6 +1355,7 @@ export class CustomerInsurancePolicyLookupDto implements ICustomerInsurancePolic
             this.insurancePolicyId = _data["insurancePolicyId"];
             this.insurancePolicyName = _data["insurancePolicyName"];
             this.status = _data["status"];
+            this.statusName = _data["statusName"];
             this.statusDate = _data["statusDate"] ? new Date(_data["statusDate"].toString()) : <any>undefined;
         }
     }
@@ -1373,6 +1375,7 @@ export class CustomerInsurancePolicyLookupDto implements ICustomerInsurancePolic
         data["insurancePolicyId"] = this.insurancePolicyId;
         data["insurancePolicyName"] = this.insurancePolicyName;
         data["status"] = this.status;
+        data["statusName"] = this.statusName;
         data["statusDate"] = this.statusDate ? this.statusDate.toISOString() : <any>undefined;
         return data; 
     }
@@ -1385,19 +1388,19 @@ export interface ICustomerInsurancePolicyLookupDto {
     insurancePolicyId?: number;
     insurancePolicyName?: string | undefined;
     status?: CustomerInsurancePolicyStatus;
+    statusName?: string | undefined;
     statusDate?: Date;
 }
 
 export enum CustomerInsurancePolicyStatus {
-    Assigned = 0,
-    Cancelled = 1,
+    Asignado = 0,
+    Cancelado = 1,
 }
 
 export class CreateCustomerInsurancePolicyCommand implements ICreateCustomerInsurancePolicyCommand {
     customerId?: string | undefined;
     insurancePolicyId?: number;
     status?: CustomerInsurancePolicyStatus;
-    statusDate?: Date;
 
     constructor(data?: ICreateCustomerInsurancePolicyCommand) {
         if (data) {
@@ -1413,7 +1416,6 @@ export class CreateCustomerInsurancePolicyCommand implements ICreateCustomerInsu
             this.customerId = _data["customerId"];
             this.insurancePolicyId = _data["insurancePolicyId"];
             this.status = _data["status"];
-            this.statusDate = _data["statusDate"] ? new Date(_data["statusDate"].toString()) : <any>undefined;
         }
     }
 
@@ -1429,7 +1431,6 @@ export class CreateCustomerInsurancePolicyCommand implements ICreateCustomerInsu
         data["customerId"] = this.customerId;
         data["insurancePolicyId"] = this.insurancePolicyId;
         data["status"] = this.status;
-        data["statusDate"] = this.statusDate ? this.statusDate.toISOString() : <any>undefined;
         return data; 
     }
 }
@@ -1438,13 +1439,11 @@ export interface ICreateCustomerInsurancePolicyCommand {
     customerId?: string | undefined;
     insurancePolicyId?: number;
     status?: CustomerInsurancePolicyStatus;
-    statusDate?: Date;
 }
 
 export class UpdateCustomerInsurancePolicyCommand implements IUpdateCustomerInsurancePolicyCommand {
     customerInsurancePolicyId?: number;
     status?: CustomerInsurancePolicyStatus;
-    statusDate?: Date;
 
     constructor(data?: IUpdateCustomerInsurancePolicyCommand) {
         if (data) {
@@ -1459,7 +1458,6 @@ export class UpdateCustomerInsurancePolicyCommand implements IUpdateCustomerInsu
         if (_data) {
             this.customerInsurancePolicyId = _data["customerInsurancePolicyId"];
             this.status = _data["status"];
-            this.statusDate = _data["statusDate"] ? new Date(_data["statusDate"].toString()) : <any>undefined;
         }
     }
 
@@ -1474,7 +1472,6 @@ export class UpdateCustomerInsurancePolicyCommand implements IUpdateCustomerInsu
         data = typeof data === 'object' ? data : {};
         data["customerInsurancePolicyId"] = this.customerInsurancePolicyId;
         data["status"] = this.status;
-        data["statusDate"] = this.statusDate ? this.statusDate.toISOString() : <any>undefined;
         return data; 
     }
 }
@@ -1482,7 +1479,6 @@ export class UpdateCustomerInsurancePolicyCommand implements IUpdateCustomerInsu
 export interface IUpdateCustomerInsurancePolicyCommand {
     customerInsurancePolicyId?: number;
     status?: CustomerInsurancePolicyStatus;
-    statusDate?: Date;
 }
 
 export class InsurancePoliciesListVm implements IInsurancePoliciesListVm {
@@ -1539,7 +1535,8 @@ export class InsurancePolicyLookupDto implements IInsurancePolicyLookupDto {
     coverageStart?: Date;
     coveragePeriod?: number;
     policyValue?: number;
-    riksType?: string | undefined;
+    riskType?: RiskType;
+    riskTypeName?: string | undefined;
 
     constructor(data?: IInsurancePolicyLookupDto) {
         if (data) {
@@ -1561,7 +1558,8 @@ export class InsurancePolicyLookupDto implements IInsurancePolicyLookupDto {
             this.coverageStart = _data["coverageStart"] ? new Date(_data["coverageStart"].toString()) : <any>undefined;
             this.coveragePeriod = _data["coveragePeriod"];
             this.policyValue = _data["policyValue"];
-            this.riksType = _data["riksType"];
+            this.riskType = _data["riskType"];
+            this.riskTypeName = _data["riskTypeName"];
         }
     }
 
@@ -1583,7 +1581,8 @@ export class InsurancePolicyLookupDto implements IInsurancePolicyLookupDto {
         data["coverageStart"] = this.coverageStart ? this.coverageStart.toISOString() : <any>undefined;
         data["coveragePeriod"] = this.coveragePeriod;
         data["policyValue"] = this.policyValue;
-        data["riksType"] = this.riksType;
+        data["riskType"] = this.riskType;
+        data["riskTypeName"] = this.riskTypeName;
         return data; 
     }
 }
@@ -1598,7 +1597,15 @@ export interface IInsurancePolicyLookupDto {
     coverageStart?: Date;
     coveragePeriod?: number;
     policyValue?: number;
-    riksType?: string | undefined;
+    riskType?: RiskType;
+    riskTypeName?: string | undefined;
+}
+
+export enum RiskType {
+    Bajo = 0,
+    Medio = 1,
+    MedioAlto = 2,
+    Alto = 3,
 }
 
 export class CreateInsurancePolicyCommand implements ICreateInsurancePolicyCommand {
@@ -1609,7 +1616,7 @@ export class CreateInsurancePolicyCommand implements ICreateInsurancePolicyComma
     coverageStart?: Date;
     coveragePeriod?: number;
     policyValue?: number;
-    riksType?: RiskType;
+    riskType?: RiskType;
 
     constructor(data?: ICreateInsurancePolicyCommand) {
         if (data) {
@@ -1629,7 +1636,7 @@ export class CreateInsurancePolicyCommand implements ICreateInsurancePolicyComma
             this.coverageStart = _data["coverageStart"] ? new Date(_data["coverageStart"].toString()) : <any>undefined;
             this.coveragePeriod = _data["coveragePeriod"];
             this.policyValue = _data["policyValue"];
-            this.riksType = _data["riksType"];
+            this.riskType = _data["riskType"];
         }
     }
 
@@ -1649,7 +1656,7 @@ export class CreateInsurancePolicyCommand implements ICreateInsurancePolicyComma
         data["coverageStart"] = this.coverageStart ? this.coverageStart.toISOString() : <any>undefined;
         data["coveragePeriod"] = this.coveragePeriod;
         data["policyValue"] = this.policyValue;
-        data["riksType"] = this.riksType;
+        data["riskType"] = this.riskType;
         return data; 
     }
 }
@@ -1662,14 +1669,7 @@ export interface ICreateInsurancePolicyCommand {
     coverageStart?: Date;
     coveragePeriod?: number;
     policyValue?: number;
-    riksType?: RiskType;
-}
-
-export enum RiskType {
-    Low = 0,
-    Medium = 1,
-    MediumHigh = 2,
-    High = 3,
+    riskType?: RiskType;
 }
 
 export class UpdateInsurancePolicyCommand implements IUpdateInsurancePolicyCommand {
@@ -1681,7 +1681,7 @@ export class UpdateInsurancePolicyCommand implements IUpdateInsurancePolicyComma
     coverageStart?: Date;
     coveragePeriod?: number;
     policyValue?: number;
-    riksType?: RiskType;
+    riskType?: RiskType;
 
     constructor(data?: IUpdateInsurancePolicyCommand) {
         if (data) {
@@ -1702,7 +1702,7 @@ export class UpdateInsurancePolicyCommand implements IUpdateInsurancePolicyComma
             this.coverageStart = _data["coverageStart"] ? new Date(_data["coverageStart"].toString()) : <any>undefined;
             this.coveragePeriod = _data["coveragePeriod"];
             this.policyValue = _data["policyValue"];
-            this.riksType = _data["riksType"];
+            this.riskType = _data["riskType"];
         }
     }
 
@@ -1723,7 +1723,7 @@ export class UpdateInsurancePolicyCommand implements IUpdateInsurancePolicyComma
         data["coverageStart"] = this.coverageStart ? this.coverageStart.toISOString() : <any>undefined;
         data["coveragePeriod"] = this.coveragePeriod;
         data["policyValue"] = this.policyValue;
-        data["riksType"] = this.riksType;
+        data["riskType"] = this.riskType;
         return data; 
     }
 }
@@ -1737,7 +1737,7 @@ export interface IUpdateInsurancePolicyCommand {
     coverageStart?: Date;
     coveragePeriod?: number;
     policyValue?: number;
-    riksType?: RiskType;
+    riskType?: RiskType;
 }
 
 export class WeatherForecast implements IWeatherForecast {

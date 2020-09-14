@@ -19,7 +19,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.UpdateInsurancePolicy
         public DateTime CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
         public Int64 PolicyValue { get; set; }
-        public RiskType RiksType { get; set; }
+        public RiskType RiskType { get; set; }
     }
     public class UpdateInsurancePolicyCommandHandler : IRequestHandler<UpdateInsurancePolicyCommand>
     {
@@ -45,7 +45,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.UpdateInsurancePolicy
             entity.CoverageStart = request.CoverageStart;
             entity.CoveragePeriod = request.CoveragePeriod;
             entity.PolicyValue = request.PolicyValue;
-            entity.RiksType = request.RiksType;
+            entity.RiskType = request.RiskType;
             entity.IsActive = true;
 
             await _context.SaveChangesAsync(cancellationToken);

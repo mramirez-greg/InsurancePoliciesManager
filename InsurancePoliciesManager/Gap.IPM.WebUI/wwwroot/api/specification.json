@@ -707,6 +707,10 @@
           "status": {
             "$ref": "#/components/schemas/CustomerInsurancePolicyStatus"
           },
+          "statusName": {
+            "type": "string",
+            "nullable": true
+          },
           "statusDate": {
             "type": "string",
             "format": "date-time"
@@ -717,8 +721,8 @@
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "Assigned",
-          "Cancelled"
+          "Asignado",
+          "Cancelado"
         ],
         "enum": [
           0,
@@ -739,10 +743,6 @@
           },
           "status": {
             "$ref": "#/components/schemas/CustomerInsurancePolicyStatus"
-          },
-          "statusDate": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -756,10 +756,6 @@
           },
           "status": {
             "$ref": "#/components/schemas/CustomerInsurancePolicyStatus"
-          },
-          "statusDate": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -816,11 +812,30 @@
             "type": "integer",
             "format": "int64"
           },
-          "riksType": {
+          "riskType": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "riskTypeName": {
             "type": "string",
             "nullable": true
           }
         }
+      },
+      "RiskType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Bajo",
+          "Medio",
+          "MedioAlto",
+          "Alto"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
       },
       "CreateInsurancePolicyCommand": {
         "type": "object",
@@ -854,26 +869,10 @@
             "type": "integer",
             "format": "int64"
           },
-          "riksType": {
+          "riskType": {
             "$ref": "#/components/schemas/RiskType"
           }
         }
-      },
-      "RiskType": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "Low",
-          "Medium",
-          "MediumHigh",
-          "High"
-        ],
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ]
       },
       "UpdateInsurancePolicyCommand": {
         "type": "object",
@@ -911,7 +910,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "riksType": {
+          "riskType": {
             "$ref": "#/components/schemas/RiskType"
           }
         }

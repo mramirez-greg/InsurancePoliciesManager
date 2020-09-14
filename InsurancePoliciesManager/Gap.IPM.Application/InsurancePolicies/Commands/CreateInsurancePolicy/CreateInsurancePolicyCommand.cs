@@ -17,7 +17,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.CreateInsurancePolicy
         public DateTime CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
         public Int64 PolicyValue { get; set; }
-        public RiskType RiksType { get; set; }
+        public RiskType RiskType { get; set; }
     }
     public class CreateInsurancePolicyCommandHandler : IRequestHandler<CreateInsurancePolicyCommand, int>
     {
@@ -39,7 +39,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.CreateInsurancePolicy
                 CoverageStart=request.CoverageStart,
                 CoveragePeriod=request.CoveragePeriod,
                 PolicyValue=request.PolicyValue,
-                RiksType=request.RiksType,
+                RiskType=request.RiskType,
                 IsActive=true
             };
 

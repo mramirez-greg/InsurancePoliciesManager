@@ -16,6 +16,7 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Queries.GetCustomerInsu
         public Int64 InsurancePolicyId { get; set; }
         public string InsurancePolicyName { get; set; }
         public CustomerInsurancePolicyStatus Status { get; set; }
+        public string StatusName { get; set; }
         public DateTime StatusDate { get; set; }
 
         public void Mapping(Profile profile)
@@ -23,10 +24,11 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Queries.GetCustomerInsu
             profile.CreateMap<CustomerInsurancePolicy, CustomerInsurancePolicyLookupDto>()
                 .ForMember(d => d.CustomerInsurancePolicyId, opt => opt.MapFrom(s => s.CustomerInsurancePolicyId))
                 .ForMember(d => d.CustomerId, opt => opt.MapFrom(s => s.CustomerId))
-                .ForMember(d => d.CustomerName, opt => opt.MapFrom(s => s.Customer.FirstName + ", " + s.Customer.LastName))
+                .ForMember(d => d.CustomerName, opt => opt.MapFrom(s => s.Customer.FirstName + " " + s.Customer.LastName))
                 .ForMember(d => d.InsurancePolicyId, opt => opt.MapFrom(s => s.InsurancePolicyId))
                 .ForMember(d => d.InsurancePolicyName, opt => opt.MapFrom(s => s.InsurancePolicy.Name))
                 .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status))
+                .ForMember(d => d.StatusName, opt => opt.MapFrom(s => s.Status.ToString()))
                 .ForMember(d => d.StatusDate, opt => opt.MapFrom(s => s.StatusDate));
         }
 

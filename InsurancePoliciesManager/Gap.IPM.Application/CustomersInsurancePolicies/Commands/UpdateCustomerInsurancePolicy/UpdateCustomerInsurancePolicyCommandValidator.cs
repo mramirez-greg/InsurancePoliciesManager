@@ -10,8 +10,6 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Commands.UpdateCustomer
               .NotNull().WithMessage("Id is required.");           
             RuleFor(v => v.Status)
                 .NotNull();
-            RuleFor(v => v.StatusDate)
-                .NotNull();
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Commands.CreateCustomer
                 .NotNull();
             RuleFor(v => v.Status)
                 .NotNull();
-            RuleFor(v => v.StatusDate)
-                .NotNull();
 
         }
     }

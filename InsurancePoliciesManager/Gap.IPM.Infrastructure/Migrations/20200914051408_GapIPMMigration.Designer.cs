@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gap.IPM.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationInsurancePolicyDbContext))]
-    [Migration("20200913212757_GapIPMMigration")]
+    [Migration("20200914051408_GapIPMMigration")]
     partial class GapIPMMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -195,7 +195,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                     b.Property<long>("PolicyValue")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("RiksType")
+                    b.Property<int>("RiskType")
                         .HasColumnType("int");
 
                     b.HasKey("InsurancePolicyId");

@@ -3,7 +3,7 @@ using Gap.IPM.Domain.Enums;
 
 namespace Gap.IPM.Application.InsurancePolicies.Commands.CreateInsurancePolicy
 {
-    class CreateInsurancePolicyCommandValidator : AbstractValidator<CreateInsurancePolicyCommand>
+    public class CreateInsurancePolicyCommandValidator : AbstractValidator<CreateInsurancePolicyCommand>
     {
         public CreateInsurancePolicyCommandValidator()
         {
@@ -24,9 +24,9 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.CreateInsurancePolicy
                .WithMessage("Policy Value must be greater than $0");
 
             //business rule for application defined by GAP's Exercise document
-            When(v => v.RiksType.Equals(RiskType.High), () => {
+            When(v => v.RiskType.Equals(RiskType.Alto), () => {
                 RuleFor(v => v.Coverage).LessThanOrEqualTo(0.5M).WithMessage("Coverage percentage can't be greater than 50");
-            });            
+            });
         }
     }
 }

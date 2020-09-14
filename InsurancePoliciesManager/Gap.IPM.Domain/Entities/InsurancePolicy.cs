@@ -17,7 +17,7 @@ namespace Gap.IPM.Domain.Entities
         public DateTime CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
         public Int64 PolicyValue { get; set; }
-        public RiskType RiksType { get; set; }
+        public RiskType RiskType { get; set; }
         public bool IsActive { get; set; }
 
         public CoverageType CoverageType { get; set; }

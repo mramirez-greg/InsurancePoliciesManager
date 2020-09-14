@@ -18,6 +18,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule  } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AssignPolicyComponent } from './assign-policy/assign-policy.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CounterComponent,
     FetchDataComponent,
     PoliciesComponent,
-    CustomersComponent
+    CustomersComponent,
+    AssignPolicyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,7 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'customers', component: CustomersComponent, canActivate: [AuthorizeGuard]  },
-      { path: 'policies', component: PoliciesComponent},
+      { path: 'policies', component: PoliciesComponent, canActivate: [AuthorizeGuard] },
+      { path: 'assign-policy', component: AssignPolicyComponent, canActivate: [AuthorizeGuard] },
     ]),
     BrowserAnimationsModule,
     ModalModule.forRoot(),

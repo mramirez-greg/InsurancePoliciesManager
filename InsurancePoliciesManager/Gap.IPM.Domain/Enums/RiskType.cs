@@ -2,9 +2,9 @@
 {
     public enum RiskType
     {
-        Low,
-        Medium,
-        MediumHigh,
-        High
+        Bajo,
+        Medio,
+        MedioAlto,
+        Alto
     }
 }

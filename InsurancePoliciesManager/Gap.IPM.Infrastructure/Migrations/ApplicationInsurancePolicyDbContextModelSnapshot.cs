@@ -193,7 +193,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                     b.Property<long>("PolicyValue")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("RiksType")
+                    b.Property<int>("RiskType")
                         .HasColumnType("int");
 
                     b.HasKey("InsurancePolicyId");

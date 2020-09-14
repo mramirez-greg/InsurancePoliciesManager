@@ -24,7 +24,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.UpdateInsurancePolicy
                .WithMessage("Policy Value must be greater than $0");
 
             //business rule for application defined by GAP's Exercise document
-            When(v => v.RiksType.Equals(RiskType.High), () => {
+            When(v => v.RiskType.Equals(RiskType.Alto), () => {
                 RuleFor(v => v.Coverage).LessThanOrEqualTo(0.5M).WithMessage("Coverage percentage can't be greater than 50");
             });
         }

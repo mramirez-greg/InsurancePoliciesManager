@@ -15,15 +15,16 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Commands.UpdateCustomer
     {
         public Int64 CustomerInsurancePolicyId { get; set; }
         public CustomerInsurancePolicyStatus Status { get; set; }
-        public DateTime StatusDate { get; set; }
     }
     public class UpdateCustomerInsurancePolicyCommanddHandler : IRequestHandler<UpdateCustomerInsurancePolicyCommand, Int64>
     {
-        private readonly IApplicationInsurancePolicyDbContext _context;
+        private readonly IApplicationInsurancePolicyDbContext _context; 
+        private readonly IDateTime _dateTime;
 
-        public UpdateCustomerInsurancePolicyCommanddHandler(IApplicationInsurancePolicyDbContext context)
+        public UpdateCustomerInsurancePolicyCommanddHandler(IApplicationInsurancePolicyDbContext context, IDateTime dateTime)
         {
             _context = context;
+            _dateTime = dateTime;
         }
 
         public async Task<Int64> Handle(UpdateCustomerInsurancePolicyCommand request, CancellationToken cancellationToken)
@@ -36,7 +37,7 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Commands.UpdateCustomer
             }
 
             entity.Status = request.Status;
-            entity.StatusDate = request.StatusDate;
+            entity.StatusDate =_dateTime.Now;
            
 
             await _context.SaveChangesAsync(cancellationToken);

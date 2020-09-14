@@ -65,7 +65,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                     CoverageStart = table.Column<DateTime>(nullable: false),
                     CoveragePeriod = table.Column<int>(nullable: false),
                     PolicyValue = table.Column<long>(nullable: false),
-                    RiksType = table.Column<int>(nullable: false),
+                    RiskType = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

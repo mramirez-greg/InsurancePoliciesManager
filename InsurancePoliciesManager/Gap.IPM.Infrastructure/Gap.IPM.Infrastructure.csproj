@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20200913211915_GapIPMMigration.Designer.cs" />
     <Compile Remove="Migrations\20200913212644_GapIPMMigration.cs" />
     <Compile Remove="Migrations\20200913212644_GapIPMMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200913212757_GapIPMMigration.cs" />
+    <Compile Remove="Migrations\20200913212757_GapIPMMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

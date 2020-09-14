@@ -6,7 +6,7 @@ namespace Gap.IPM.Domain.Enums
 {
     public enum CustomerInsurancePolicyStatus
     {
-        Assigned,
-        Cancelled
+        Asignado,
+        Cancelado
     }
 }

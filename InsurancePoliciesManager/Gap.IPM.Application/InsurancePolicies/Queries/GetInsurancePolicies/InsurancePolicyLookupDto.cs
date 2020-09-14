@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Gap.IPM.Application.Common.Mappings;
 using Gap.IPM.Domain.Entities;
+using Gap.IPM.Domain.Enums;
 using System;
 
 
@@ -18,7 +19,8 @@ namespace Gap.IPM.Application.InsurancePolicies.Queries.GetInsurancePolicies
         public DateTime CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
         public Int64 PolicyValue { get; set; }
-        public string RiksType { get; set; }
+        public RiskType RiskType { get; set; }
+        public string RiskTypeName { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -32,7 +34,8 @@ namespace Gap.IPM.Application.InsurancePolicies.Queries.GetInsurancePolicies
                 .ForMember(d => d.CoverageStart, opt => opt.MapFrom(s => s.CoverageStart))
                 .ForMember(d => d.CoveragePeriod, opt => opt.MapFrom(s => s.CoveragePeriod))
                 .ForMember(d => d.PolicyValue, opt => opt.MapFrom(s => s.PolicyValue))
-                .ForMember(d => d.RiksType, opt => opt.MapFrom(s => s.RiksType.ToString()));
+                .ForMember(d => d.RiskType, opt => opt.MapFrom(s => s.RiskType))
+                .ForMember(d => d.RiskTypeName, opt => opt.MapFrom(s => s.RiskType.ToString()));
         }
     }
 }
