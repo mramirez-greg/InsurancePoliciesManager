@@ -25,10 +25,10 @@ namespace Gap.IPM.ApplicationUnitTest.InsurancePolicy.Commands
             var description = "RamirezTest";
             var coverageTypeId = 3;
             var coverage = 90;
-            var coverageStart = DateTime.Now;
+            var coverageStart = DateTime.Now.ToString();
             var coveragePeriod =12;
             var policyValue =1000000;
-            var riskType =RiskType.Bajo;
+            var riskType =(int)RiskType.Bajo;
 
             // Act
             var result = sut.Handle(new CreateInsurancePolicyCommand

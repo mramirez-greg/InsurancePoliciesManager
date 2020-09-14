@@ -4,7 +4,7 @@
 
 <p *ngIf="!vm"><em>Cargando, espere por favor...</em></p>
 
-<section  *ngIf="vm">
+<section *ngIf="vm">
   <section class="row">
     <section class="col-lg">
       <section class="clearfix">
@@ -32,7 +32,7 @@
             <tr *ngFor="let insurancePolicy of vm.insurancePolicies; index as i">
               <td>{{insurancePolicy.name}}</td>
               <td>{{insurancePolicy.coverageTypeName}}</td>
-              <td>{{insurancePolicy.coverage | percent}}</td>
+              <td>{{insurancePolicy.coverage /100 | percent}}</td>
               <td>{{insurancePolicy.coverageStart | date}}</td>
               <td>{{insurancePolicy.coveragePeriod}}</td>
               <td>{{insurancePolicy.policyValue | currency }}</td>
@@ -46,11 +46,10 @@
             </tr>
           </tbody>
         </table>
-      </section>          
+      </section>
     </section>
   </section>
 </section>
-
 <ng-template #editPolicyModalTemplate>
   <section class="modal-header clearfix">
     <h4 class="modal-title float-left">Editar Poliza</h4>
@@ -76,7 +75,7 @@
     </section>
     <section class="form-group">
       <label for="coverage">Porcentaje de Cobertura %</label>
-      <input type="text" width="50" class="form-control" id="coverage" placeholder="ingrese la cobertura..." [(ngModel)]="editPolicyEditor.coverage" required
+      <input type="number" width="50" class="form-control" id="coverage" placeholder="ingrese la cobertura..." [(ngModel)]="editPolicyEditor.coverage" required
              [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
     </section>
     <section class="form-group">
@@ -91,21 +90,21 @@
     </section>
     <section class="form-group">
       <label for="coveragePeriod">Periodo de cobertura en meses</label>
-      <input type="text" class="form-control" id="coveragePeriod" placeholder="ingrese el periodo de cobertura..." [(ngModel)]="editPolicyEditor.coveragePeriod"
+      <input type="number" class="form-control" id="coveragePeriod" placeholder="ingrese el periodo de cobertura..." [(ngModel)]="editPolicyEditor.coveragePeriod"
              [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
     </section>
     <section class="form-group">
-      <label for="policyValue">Valor de la cobertua</label>
-      <input type="text" class="form-control" id="policyValue" placeholder="ingrese el valor de cobertura..." [(ngModel)]="editPolicyEditor.policyValue"
+      <label for="policyValue">Valor de la cobertura</label>
+      <input type="number" class="form-control" id="policyValue" placeholder="ingrese el valor de cobertura..." [(ngModel)]="editPolicyEditor.policyValue"
              [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
     </section>
     <section class="form-group">
       <label for="riskType">Tipo de Riesgo</label>
       <select class="form-control" id="riskType" [(ngModel)]="editPolicyEditor.riskType">
-        <option [ngValue]="0">Bajo</option>
-        <option [ngValue]="1">Medio</option>
-        <option [ngValue]="2">Medio-Alto</option>
-        <option [ngValue]="3">Alto</option>
+        <option [ngValue]=0>Bajo</option>
+        <option [ngValue]=1>Medio</option>
+        <option [ngValue]=2>Medio-Alto</option>
+        <option [ngValue]=3>Alto</option>
       </select>
     </section>
   </section>
@@ -118,6 +117,9 @@
         <button class="btn btn-default" (click)="editPolicyModalRef.hide()">Cancelar</button>
         <button class="btn btn-primary" (click)="updatePolicy()">Actualizar</button>
       </section>
+    </section>
+    <section *ngIf="errormod"class="text-left  text-danger">
+      {{errormod}}
     </section>
   </section>
 </ng-template>
@@ -147,7 +149,7 @@
     </section>
     <section class="form-group">
       <label for="coverage">Porcentaje de Cobertura %</label>
-      <input type="text" width="50" class="form-control" id="coverage" placeholder="ingrese la cobertura..." [(ngModel)]="newPolicyEditor.coverage" required
+      <input type="number" width="50" class="form-control" id="coverage" placeholder="ingrese la cobertura..." [(ngModel)]="newPolicyEditor.coverage" required
              [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
     </section>
     <section class="form-group">
@@ -162,21 +164,21 @@
     </section>
     <section class="form-group">
       <label for="coveragePeriod">Periodo de cobertura en meses</label>
-      <input type="text" class="form-control" id="coveragePeriod" placeholder="ingrese el periodo de cobertura..." [(ngModel)]="newPolicyEditor.coveragePeriod"
+      <input type="number" class="form-control" id="coveragePeriod" placeholder="ingrese el periodo de cobertura..." [(ngModel)]="newPolicyEditor.coveragePeriod"
              [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
     </section>
     <section class="form-group">
-      <label for="policyValue">Valor de la cobertua</label>
-      <input type="text" class="form-control" id="policyValue" placeholder="ingrese el valor de cobertura..." [(ngModel)]="newPolicyEditor.policyValue"
+      <label for="policyValue">Valor de la cobertura</label>
+      <input type="number" class="form-control" id="policyValue" placeholder="ingrese el valor de cobertura..." [(ngModel)]="newPolicyEditor.policyValue"
              [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
     </section>
     <section class="form-group">
       <label for="riskType">Tipo de Riesgo</label>
       <select class="form-control" id="riskType" [(ngModel)]="newPolicyEditor.riskType">
-        <option [ngValue]="0" selected>Bajo</option>
-        <option [ngValue]="1">Medio</option>
-        <option [ngValue]="2">Medio-Alto</option>
-        <option [ngValue]="3">Alto</option>
+        <option [ngValue]=0>Bajo</option>
+        <option [ngValue]=1>Medio</option>
+        <option [ngValue]=2>Medio-Alto</option>
+        <option [ngValue]=3>Alto</option>
       </select>
     </section>
   </section>
@@ -185,6 +187,9 @@
       <button class="btn btn-default" (click)="newPolicyCancelled()">Cancelar</button>
       <button class="btn btn-primary" (click)="addPolicy()">Crear</button>
     </section>
+  </section>
+  <section *ngIf="errormod" class="text-left  text-danger">
+    {{errormod}}
   </section>
 </ng-template>
 
@@ -197,7 +202,7 @@
   </section>
   <section class="modal-body">
     <p>¿Realmente desea eliminar la póliza {{insurancePolicy.name}}?. </p>
-    
+
   </section>
   <section class="modal-footer">
     <section class="text-right">

@@ -11,7 +11,7 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Commands.CreateCustomer
     public class CreateCustomerInsurancePolicyCommand : IRequest<Int64>
     {
         public string CustomerId { get; set; }
-        public Int64 InsurancePolicyId { get; set; }
+        public int InsurancePolicyId { get; set; }
         public CustomerInsurancePolicyStatus Status { get; set; }
     }
     public class CreateCustomerInsurancePolicyCommandHandler : IRequestHandler<CreateCustomerInsurancePolicyCommand, Int64>

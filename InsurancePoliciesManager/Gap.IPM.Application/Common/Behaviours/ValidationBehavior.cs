@@ -1,9 +1,10 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
+using ValidationException = Gap.IPM.Application.Common.Exceptions.ValidationException;
 
 namespace Gap.IPM.Application.Common.Behaviours
 {

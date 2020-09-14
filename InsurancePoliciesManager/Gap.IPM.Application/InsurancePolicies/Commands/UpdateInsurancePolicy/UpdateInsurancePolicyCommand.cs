@@ -11,15 +11,15 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.UpdateInsurancePolicy
 {
     public class UpdateInsurancePolicyCommand : IRequest
     {
-        public long InsurancePolicyId { get; set; }
+        public int InsurancePolicyId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int CoverageTypeId { get; set; }
         public int Coverage { get; set; }
-        public DateTime CoverageStart { get; set; }
+        public string CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
-        public long PolicyValue { get; set; }
-        public RiskType RiskType { get; set; }
+        public int PolicyValue { get; set; }
+        public int RiskType { get; set; }
     }
     public class UpdateInsurancePolicyCommandHandler : IRequestHandler<UpdateInsurancePolicyCommand>
     {
@@ -41,8 +41,8 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.UpdateInsurancePolicy
             entity.Name = request.Name;
             entity.Description = request.Description;
             entity.CoverageTypeId = request.CoverageTypeId;
-            entity.Coverage = request.Coverage/100;
-            entity.CoverageStart = request.CoverageStart;
+            entity.Coverage = request.Coverage;
+            entity.CoverageStart =DateTime.Parse(request.CoverageStart);
             entity.CoveragePeriod = request.CoveragePeriod;
             entity.PolicyValue = request.PolicyValue;
             entity.RiskType = request.RiskType;

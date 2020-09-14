@@ -64,8 +64,8 @@
     <section class="form-group">
       <label >Estado</label>
       <select class="form-control" [(ngModel)]="editAssignEditor.status">
-        <option [ngValue]="0" selected>Asignado</option>
-        <option [ngValue]="1">Cancelado</option>
+        <option [ngValue]=0 selected>Asignado</option>
+        <option [ngValue]=1>Cancelado</option>
       </select>
     </section>
   </section>
@@ -96,14 +96,14 @@
     <section class="form-group">
       <label for="insurancePolicy">Póliza</label>
       <select class="form-control" id="insurancePolicy" [(ngModel)]="newAssignEditor.insurancePolicyId">
-        <option [ngValue]="item.id" *ngFor="let item of insurancePoliciesListVm.insurancePolicies">{{ item.name }}</option>
+        <option [ngValue]="item.insurancePolicyId" *ngFor="let item of insurancePoliciesListVm.insurancePolicies">{{ item.name }}</option>
       </select>
     </section>
     <section class="form-group">
       <label for="status">Estado</label>
       <select class="form-control" id="status" [(ngModel)]="newAssignEditor.status">
-        <option [ngValue]="0" selected>Asignado</option>
-        <option [ngValue]="1">Cancelado</option>
+        <option [ngValue]=0 selected>Asignado</option>
+        <option [ngValue]=1>Cancelado</option>
       </select>
     </section>
   </section>

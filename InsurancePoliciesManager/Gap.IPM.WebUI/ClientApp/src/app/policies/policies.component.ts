@@ -1,13 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { faPlus, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { InsurancePoliciesListVm, InsurancePolicyClient, InsurancePolicyLookupDto, CoverageTypesListVm, CoverageTypeClient, UpdateInsurancePolicyCommand, CreateInsurancePolicyCommand } from '../gap-ipm-api';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-
-import {
-  InsurancePoliciesListVm, InsurancePolicyLookupDto, InsurancePolicyClient,
-  CoverageTypesListVm, CoverageTypeLookupDto, CoverageTypeClient,
-  CreateInsurancePolicyCommand, UpdateInsurancePolicyCommand
-} from '../gap-ipm-api';
 
 
 @Component({
@@ -17,36 +12,32 @@ import {
 })
 export class PoliciesComponent implements OnInit {
 
+  vm: InsurancePoliciesListVm;
+insurancePolicy: InsurancePolicyLookupDto;
+  coverageTypeVm: CoverageTypesListVm;
+
   faPlus = faPlus;
   faEllipsisH = faEllipsisH;
   editPolicyModalRef: BsModalRef;
   newPolicyModalRef: BsModalRef;
   deleteListModalRef: BsModalRef;
-
-  vm : InsurancePoliciesListVm;
-  insurancePolicy: InsurancePolicyLookupDto;
-  coverageTypeVm: CoverageTypesListVm;
-  coverageTypeDto: CoverageTypeLookupDto;
-  
+  errormod: string;
 
   newPolicyEditor: any = {};
   editPolicyEditor: any = {};
 
-  constructor(private insuranceClient: InsurancePolicyClient, private coverageTypeClient: CoverageTypeClient, private modalService: BsModalService) {
+  constructor(private insuranceClient: InsurancePolicyClient, private coverageTypeClient: CoverageTypeClient,private modalService: BsModalService) {
     coverageTypeClient.get().subscribe(
       result => {
         this.coverageTypeVm = result;
       },
       error => console.error(error)
     );
-    
-
   }
 
   ngOnInit() {
     this.getInsurancePolicies();
   }
-
   getInsurancePolicies(): void {
     this.insuranceClient.get().subscribe(
       result => {
@@ -55,38 +46,83 @@ export class PoliciesComponent implements OnInit {
       error => console.error(error)
     );
   }
+
   addPolicy(): void {
-    this.insuranceClient.create(CreateInsurancePolicyCommand.fromJS(this.newPolicyEditor)).subscribe(
+   
+    this.insuranceClient.create(<CreateInsurancePolicyCommand>{
+      name: this.newPolicyEditor.name,
+      description: this.newPolicyEditor.description,
+      coverageTypeId: this.newPolicyEditor.coverageTypeId,
+      coverage: this.newPolicyEditor.coverage,
+      coverageStart: this.newPolicyEditor.coverageStart,
+      coveragePeriod: this.newPolicyEditor.coveragePeriod,
+      policyValue: this.newPolicyEditor.policyValue,
+      riskType: this.newPolicyEditor.riskType
+    }).subscribe(
       result => {
-        if (result > 0) {
+        if (result> 0) {
           this.getInsurancePolicies();
-          this.newPolicyEditor.hide();
+          this.newPolicyModalRef.hide();
+          this.newPolicyEditor = {}
         }
       },
       error => {
         let errors = JSON.parse(error.response);
-
-        if (errors && errors.Title) {
-          this.newPolicyEditor.error = errors.Title[0];
-        }
-
-        setTimeout(() => document.getElementById("name").focus(), 250);
+        this.errormod = errors.errors.Coverage[0];
+        setTimeout(() => document.getElementById("firstName").focus(), 250);
       }
-    )    
+    )
   }
   updatePolicy(): void {
-    this.editPolicyEditor.insurancePolicyId = this.insurancePolicy.id
-    this.insuranceClient.update(this.insurancePolicy.id, UpdateInsurancePolicyCommand.fromJS(this.editPolicyEditor))
+    
+    this.insuranceClient.update(this.insurancePolicy.insurancePolicyId, <UpdateInsurancePolicyCommand>{
+      insurancePolicyId: this.insurancePolicy.insurancePolicyId,
+      name: this.editPolicyEditor.name,
+      description: this.editPolicyEditor.description,
+      coverageTypeId: this.editPolicyEditor.coverageTypeId,
+      coverage: this.editPolicyEditor.coverage,
+      coverageStart: this.editPolicyEditor.coverageStart,
+      coveragePeriod: this.editPolicyEditor.coveragePeriod,
+      policyValue: this.editPolicyEditor.policyValue,
+      riskType: this.editPolicyEditor.riskType
+    })
       .subscribe(
         () => {
           this.getInsurancePolicies();
+          this.editPolicyEditor = {};
           this.editPolicyModalRef.hide();
         },
-        error => console.error(error)
+        error => {
+          let errors = JSON.parse(error.response);
+          this.errormod = errors.errors.Coverage[0];
+          
+         
+        } 
       );
   }
+  showNewPolicyModal(template: TemplateRef<any>): void {
+    this.errormod = "";
+    this.newPolicyModalRef = this.modalService.show(template);
+    setTimeout(() => document.getElementById("name").focus(), 250);
+  }
+  showPolicyEditModal(template: TemplateRef<any>, item: InsurancePolicyLookupDto): void {
+    this.errormod = "";
+    this.insurancePolicy = item;
+    this.editPolicyEditor = {
+      ...this.insurancePolicy
+    };
+    this.editPolicyModalRef = this.modalService.show(template);
+  }
+  confirmDeleteList(template: TemplateRef<any>) {
+    this.editPolicyModalRef.hide();
+    this.deleteListModalRef = this.modalService.show(template);
+  }
+  newPolicyCancelled(): void {
+    this.newPolicyModalRef.hide();
+    this.newPolicyEditor = {};
+  }
   deletePolicy(): void {
-    this.insuranceClient.delete(this.insurancePolicy.id)
+    this.insuranceClient.delete(this.insurancePolicy.insurancePolicyId)
       .subscribe(
         () => {
           this.getInsurancePolicies();
@@ -95,25 +131,6 @@ export class PoliciesComponent implements OnInit {
         error => console.error(error)
       );
   }
-  confirmDeleteList(template: TemplateRef<any>) {
-    this.editPolicyModalRef.hide();
-    this.deleteListModalRef = this.modalService.show(template);
-  }
 
-  showPolicyEditModal(template: TemplateRef<any>, item: InsurancePolicyLookupDto): void {
-    this.insurancePolicy = item;
-    this.editPolicyEditor = {
-      ...this.insurancePolicy
-    };
-    this.editPolicyModalRef = this.modalService.show(template);
-  }
-  showNewPolicyModal(template: TemplateRef<any>): void {
-    this.newPolicyModalRef = this.modalService.show(template);
-    setTimeout(() => document.getElementById("name").focus(), 250);
-  }
-  newPolicyCancelled(): void {
-    this.newPolicyModalRef.hide();
-    this.newPolicyEditor = {};
-  }
 
 }

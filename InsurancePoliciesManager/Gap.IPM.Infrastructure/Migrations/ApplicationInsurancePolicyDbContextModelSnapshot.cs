@@ -108,9 +108,9 @@ namespace Gap.IPM.Infrastructure.Migrations
 
             modelBuilder.Entity("Gap.IPM.Domain.Entities.CustomerInsurancePolicy", b =>
                 {
-                    b.Property<long>("CustomerInsurancePolicyId")
+                    b.Property<int>("CustomerInsurancePolicyId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created")
@@ -124,8 +124,8 @@ namespace Gap.IPM.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<long>("InsurancePolicyId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("InsurancePolicyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -150,13 +150,13 @@ namespace Gap.IPM.Infrastructure.Migrations
 
             modelBuilder.Entity("Gap.IPM.Domain.Entities.InsurancePolicy", b =>
                 {
-                    b.Property<long>("InsurancePolicyId")
+                    b.Property<int>("InsurancePolicyId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Coverage")
-                        .HasColumnType("decimal(1,1)");
+                    b.Property<int>("Coverage")
+                        .HasColumnType("int");
 
                     b.Property<int>("CoveragePeriod")
                         .HasColumnType("int");
@@ -190,8 +190,8 @@ namespace Gap.IPM.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<long>("PolicyValue")
-                        .HasColumnType("bigint");
+                    b.Property<int>("PolicyValue")
+                        .HasColumnType("int");
 
                     b.Property<int>("RiskType")
                         .HasColumnType("int");

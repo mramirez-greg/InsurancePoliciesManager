@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Gap.IPM.Infrastructure.Migrations
 {
-    public partial class GapIPMMigration : Migration
+    public partial class APMMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                 name: "InsurancePolicy",
                 columns: table => new
                 {
-                    InsurancePolicyId = table.Column<long>(nullable: false)
+                    InsurancePolicyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
@@ -61,10 +61,10 @@ namespace Gap.IPM.Infrastructure.Migrations
                     Name = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(maxLength: 200, nullable: true),
                     CoverageTypeId = table.Column<int>(nullable: false),
-                    Coverage = table.Column<decimal>(type: "decimal(1,1)", nullable: false),
+                    Coverage = table.Column<int>(nullable: false),
                     CoverageStart = table.Column<DateTime>(nullable: false),
                     CoveragePeriod = table.Column<int>(nullable: false),
-                    PolicyValue = table.Column<long>(nullable: false),
+                    PolicyValue = table.Column<int>(nullable: false),
                     RiskType = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false)
                 },
@@ -83,14 +83,14 @@ namespace Gap.IPM.Infrastructure.Migrations
                 name: "CustomerInsurancePolicy",
                 columns: table => new
                 {
-                    CustomerInsurancePolicyId = table.Column<long>(nullable: false)
+                    CustomerInsurancePolicyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<string>(nullable: true),
                     LastModified = table.Column<DateTime>(nullable: true),
                     CustomerId = table.Column<string>(maxLength: 50, nullable: false),
-                    InsurancePolicyId = table.Column<long>(nullable: false),
+                    InsurancePolicyId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     StatusDate = table.Column<DateTime>(nullable: false)
                 },

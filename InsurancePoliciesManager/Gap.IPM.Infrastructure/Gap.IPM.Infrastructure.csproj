@@ -15,6 +15,10 @@
     <Compile Remove="Migrations\20200913212644_GapIPMMigration.Designer.cs" />
     <Compile Remove="Migrations\20200913212757_GapIPMMigration.cs" />
     <Compile Remove="Migrations\20200913212757_GapIPMMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200914051408_GapIPMMigration.cs" />
+    <Compile Remove="Migrations\20200914051408_GapIPMMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200914175735_APMMigration.cs" />
+    <Compile Remove="Migrations\20200914175735_APMMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gap.IPM.Application\Gap.IPM.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

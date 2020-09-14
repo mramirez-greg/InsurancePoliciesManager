@@ -13,7 +13,7 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Commands.UpdateCustomer
 {
     public class UpdateCustomerInsurancePolicyCommand : IRequest<Int64>
     {
-        public Int64 CustomerInsurancePolicyId { get; set; }
+        public int CustomerInsurancePolicyId { get; set; }
         public CustomerInsurancePolicyStatus Status { get; set; }
     }
     public class UpdateCustomerInsurancePolicyCommanddHandler : IRequestHandler<UpdateCustomerInsurancePolicyCommand, Int64>

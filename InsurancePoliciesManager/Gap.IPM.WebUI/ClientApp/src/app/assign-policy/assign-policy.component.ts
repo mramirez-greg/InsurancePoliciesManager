@@ -62,6 +62,7 @@ export class AssignPolicyComponent implements OnInit {
     );
   }
   addAssign(): void {
+    
     this.customersInsurancePoliciesClient.create(CreateCustomerInsurancePolicyCommand.fromJS(this.newAssignEditor)).subscribe(
       result => {
         if (result> 0) {
@@ -89,7 +90,7 @@ export class AssignPolicyComponent implements OnInit {
     )
   }
   showAssignEditModal(template: TemplateRef<any>, item: CustomerInsurancePolicyLookupDto): void {
-    console.log(item);
+    
     this.customerInsurancePolicy = item;
     this.editAssignEditor = {
       ...this.customerInsurancePolicy

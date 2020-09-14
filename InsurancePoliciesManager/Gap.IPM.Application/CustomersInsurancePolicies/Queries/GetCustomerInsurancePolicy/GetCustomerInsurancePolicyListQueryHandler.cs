@@ -21,6 +21,8 @@ namespace Gap.IPM.Application.CustomersInsurancePolicies.Queries.GetCustomerInsu
         public async Task<CustomerInsurancePolicyListVm> Handle(GetCustomerInsurancePolicyListQuery request, CancellationToken cancellationToken)
         {
             var customerInsurancePolicies = await _context.CustomerInsurancePolicy
+                .Include(item=>item.Customer)
+                .Include(item=>item.InsurancePolicy)
                 .ProjectTo<CustomerInsurancePolicyLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
