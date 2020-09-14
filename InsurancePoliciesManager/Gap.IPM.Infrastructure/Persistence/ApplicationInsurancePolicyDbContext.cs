@@ -19,6 +19,7 @@ namespace Gap.IPM.Infrastructure.Persistence
         private readonly IDateTime _dateTime;
         private IDbContextTransaction _currentTransaction;
 
+       
         public ApplicationInsurancePolicyDbContext(
             DbContextOptions<ApplicationInsurancePolicyDbContext> options,
             ICurrentUserService currentUserService,

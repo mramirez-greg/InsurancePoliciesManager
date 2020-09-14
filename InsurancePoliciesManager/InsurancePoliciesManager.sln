@@ -13,15 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Infrastructure", "4.Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Test", "5.Test", "{E96F8425-4DAD-42F8-AA2D-C12E74BCDB82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.Application", "Gap.IPM.Application\Gap.IPM.Application.csproj", "{FB475C03-800D-4AD1-A535-F42BA1E9694D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gap.IPM.Application", "Gap.IPM.Application\Gap.IPM.Application.csproj", "{FB475C03-800D-4AD1-A535-F42BA1E9694D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.Domain", "Gap.IPM.Domain\Gap.IPM.Domain.csproj", "{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gap.IPM.Domain", "Gap.IPM.Domain\Gap.IPM.Domain.csproj", "{2F1983CC-6B5A-4DE6-BA08-160D8ADFB67B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.Infrastructure", "Gap.IPM.Infrastructure\Gap.IPM.Infrastructure.csproj", "{86CA475C-4551-4B82-84E5-131CFC84CA07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gap.IPM.Infrastructure", "Gap.IPM.Infrastructure\Gap.IPM.Infrastructure.csproj", "{86CA475C-4551-4B82-84E5-131CFC84CA07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.ApplicationUnitTest", "Gap.IPM.ApplicationUnitTest\Gap.IPM.ApplicationUnitTest.csproj", "{A967894B-2E93-4B5F-8931-5455E6149C90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gap.IPM.ApplicationUnitTest", "Gap.IPM.ApplicationUnitTest\Gap.IPM.ApplicationUnitTest.csproj", "{A967894B-2E93-4B5F-8931-5455E6149C90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gap.IPM.WebUI", "Gap.IPM.WebUI\Gap.IPM.WebUI.csproj", "{3335CC8A-030A-4CDF-B916-FF80C79AE79E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gap.IPM.WebUI", "Gap.IPM.WebUI\Gap.IPM.WebUI.csproj", "{3335CC8A-030A-4CDF-B916-FF80C79AE79E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
