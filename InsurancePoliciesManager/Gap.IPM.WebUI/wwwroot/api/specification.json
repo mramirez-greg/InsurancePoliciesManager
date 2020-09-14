@@ -6,12 +6,12 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Coverage": {
+    "/api/CoverageType": {
       "get": {
         "tags": [
-          "Coverage"
+          "CoverageType"
         ],
-        "operationId": "Coverage_Get",
+        "operationId": "CoverageType_Get",
         "responses": {
           "200": {
             "description": "",
@@ -27,9 +27,9 @@
       },
       "post": {
         "tags": [
-          "Coverage"
+          "CoverageType"
         ],
-        "operationId": "Coverage_Create",
+        "operationId": "CoverageType_Create",
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -57,12 +57,12 @@
         }
       }
     },
-    "/api/Coverage/{id}": {
+    "/api/CoverageType/{id}": {
       "put": {
         "tags": [
-          "Coverage"
+          "CoverageType"
         ],
-        "operationId": "Coverage_Update",
+        "operationId": "CoverageType_Update",
         "parameters": [
           {
             "name": "id",
@@ -103,9 +103,9 @@
       },
       "delete": {
         "tags": [
-          "Coverage"
+          "CoverageType"
         ],
-        "operationId": "Coverage_Delete",
+        "operationId": "CoverageType_Delete",
         "parameters": [
           {
             "name": "id",
@@ -375,8 +375,8 @@
             "nullable": true
           },
           "coverage": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "decimal"
           },
           "coverageStart": {
             "type": "string",
@@ -413,8 +413,8 @@
             "format": "int32"
           },
           "coverage": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "decimal"
           },
           "coverageStart": {
             "type": "string",
@@ -470,8 +470,8 @@
             "format": "int32"
           },
           "coverage": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "decimal"
           },
           "coverageStart": {
             "type": "string",

@@ -14,7 +14,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
-export interface ICoverageClient {
+export interface ICoverageTypeClient {
     get(): Observable<CoverageTypesListVm>;
     create(command: CreateCoverageTypeCommand): Observable<number>;
     update(id: number, command: UpdateCoverageTypeCommand): Observable<FileResponse>;
@@ -24,7 +24,7 @@ export interface ICoverageClient {
 @Injectable({
     providedIn: 'root'
 })
-export class CoverageClient implements ICoverageClient {
+export class CoverageTypeClient implements ICoverageTypeClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -35,7 +35,7 @@ export class CoverageClient implements ICoverageClient {
     }
 
     get(): Observable<CoverageTypesListVm> {
-        let url_ = this.baseUrl + "/api/Coverage";
+        let url_ = this.baseUrl + "/api/CoverageType";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -83,7 +83,7 @@ export class CoverageClient implements ICoverageClient {
     }
 
     create(command: CreateCoverageTypeCommand): Observable<number> {
-        let url_ = this.baseUrl + "/api/Coverage";
+        let url_ = this.baseUrl + "/api/CoverageType";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -135,7 +135,7 @@ export class CoverageClient implements ICoverageClient {
     }
 
     update(id: number, command: UpdateCoverageTypeCommand): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Coverage/{id}";
+        let url_ = this.baseUrl + "/api/CoverageType/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -188,7 +188,7 @@ export class CoverageClient implements ICoverageClient {
     }
 
     delete(id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Coverage/{id}";
+        let url_ = this.baseUrl + "/api/CoverageType/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));

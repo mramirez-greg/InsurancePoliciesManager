@@ -14,7 +14,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Queries.GetInsurancePolicies
         public string Description { get; set; }
         public int CoverageTypeId { get; set; }
         public string CoverageTypeName { get; set; }
-        public int Coverage { get; set; }
+        public decimal Coverage { get; set; }
         public DateTime CoverageStart { get; set; }
         public int CoveragePeriod { get; set; }
         public Int64 PolicyValue { get; set; }

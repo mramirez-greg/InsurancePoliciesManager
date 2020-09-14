@@ -61,7 +61,7 @@ namespace Gap.IPM.Infrastructure.Migrations
                     Name = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(maxLength: 200, nullable: true),
                     CoverageTypeId = table.Column<int>(nullable: false),
-                    Coverage = table.Column<int>(nullable: false),
+                    Coverage = table.Column<decimal>(type: "decimal(1,1)", nullable: false),
                     CoverageStart = table.Column<DateTime>(nullable: false),
                     CoveragePeriod = table.Column<int>(nullable: false),
                     PolicyValue = table.Column<long>(nullable: false),

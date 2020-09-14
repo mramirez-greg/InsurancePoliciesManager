@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Gap.IPM.WebUI.Controllers
 {
-    public class CoverageController : ApiController
+    public class CoverageTypeController : ApiController
     {       
         [HttpGet]
         public async Task<ActionResult<CoverageTypesListVm>> Get()

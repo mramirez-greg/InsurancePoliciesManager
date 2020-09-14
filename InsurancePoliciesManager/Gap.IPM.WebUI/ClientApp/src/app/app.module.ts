@@ -16,6 +16,7 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { PoliciesComponent } from './policies/policies.component';
 import { CustomersComponent } from './customers/customers.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule  } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -40,7 +41,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'policies', component: PoliciesComponent},
     ]),
     BrowserAnimationsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

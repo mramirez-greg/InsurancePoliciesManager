@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gap.IPM.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationInsurancePolicyDbContext))]
-    [Migration("20200913172323_GapIPMMigration")]
+    [Migration("20200913212757_GapIPMMigration")]
     partial class GapIPMMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,8 +157,8 @@ namespace Gap.IPM.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Coverage")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Coverage")
+                        .HasColumnType("decimal(1,1)");
 
                     b.Property<int>("CoveragePeriod")
                         .HasColumnType("int");

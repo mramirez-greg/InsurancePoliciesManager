@@ -155,8 +155,8 @@ namespace Gap.IPM.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Coverage")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Coverage")
+                        .HasColumnType("decimal(1,1)");
 
                     b.Property<int>("CoveragePeriod")
                         .HasColumnType("int");

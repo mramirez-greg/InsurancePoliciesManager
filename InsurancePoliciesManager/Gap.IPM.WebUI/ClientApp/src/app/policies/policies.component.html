@@ -2,77 +2,195 @@
 
 <p>Desde este espacio puede gestionar las pólias, agregar, modificar, eliminar</p>
 
+<p *ngIf="!vm"><em>Cargando, espere por favor...</em></p>
 
-<table class='table table-striped' aria-labell  edby="tableLabel">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Tipo de Cobertura</th>
-      <th>Cobertura</th>
-      <th>Inicio</th>
-      <th>Periodo</th>
-      <th>Valor</th>
-      <th>Riesgo</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <!--<td>{{ forecast.date }}</td>-->
-      <td>Test </td>
-      <td>Test 1</td>
-      <td>Test 2</td>
-      <td>Test 3</td>
-      <td>Test 4</td>
-      <td>Test 5</td>
-      <td>Test 6</td>
-      <td>
-        <button  (click)="showPolicyDetailsModal(policyDetailsModalTemplate)"
-                class="btn btn-default btn-xs" role="button">
-          <fa-icon [icon]="faEllipsisH"></fa-icon>
+<section  *ngIf="vm">
+  <section class="row">
+    <section class="col-lg">
+      <section class="clearfix">
+        <h2 class="float-left">Lista de pólizas</h2>
+        <button class="btn btn-default float-right" title="Crear Póliza..."
+                (click)="showNewPolicyModal(newPolicyModalTemplate)">
+          <fa-icon [icon]="faPlus"></fa-icon>
         </button>
-      </td>
+      </section>
+      <section class="table-responsive">
+        <table class="table table-striped table-m">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo de Cobertura</th>
+              <th>Cobertura</th>
+              <th>Inicio</th>
+              <th>Periodo</th>
+              <th>Valor</th>
+              <th>Riesgo</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let insurancePolicy of vm.insurancePolicies; index as i">
+              <td>{{insurancePolicy.name}}</td>
+              <td>{{insurancePolicy.coverageTypeName}}</td>
+              <td>{{insurancePolicy.coverage | percent}}</td>
+              <td>{{insurancePolicy.coverageStart | date}}</td>
+              <td>{{insurancePolicy.coveragePeriod}}</td>
+              <td>{{insurancePolicy.policyValue | currency }}</td>
+              <td>{{insurancePolicy.riksType}}</td>
+              <td>
+                <button (click)="showPolicyEditModal(editPolicyModalTemplate,insurancePolicy)"
+                        class="btn btn-default btn-xs" role="button">
+                  <fa-icon [icon]="faEllipsisH"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>          
+    </section>
+  </section>
+</section>
 
-    </tr>
-  </tbody>
-</table>
-
-<ng-template #policyDetailsModalTemplate>
-  <div class="modal-header clearfix">
+<ng-template #editPolicyModalTemplate>
+  <section class="modal-header clearfix">
     <h4 class="modal-title float-left">Item Details</h4>
-    <button type="button" class="close float-right" aria-label="Close" (click)="policyDetailsModalRef.hide()">
+    <button type="button" class="close float-right" aria-label="Close" (click)="editpolicyModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="modal-body">
-    <div class="form">
-      <div class="form-group">
-        <label for="list">Poliza</label>
-        <!--<select class="form-control" [(ngModel)]="itemDetailsEditor.listId">
-          <option [ngValue]="list.id" *ngFor="let list of vm.lists">{{ list.title }}</option>
-        </select>-->
-      </div>
-      <div class="form-group">
-        <label for="priority">Priority</label>
-        <select class="form-control">
-          <option [ngValue]="1">Test</option>
-        </select> 
-      </div>
-      <div class="form-group">
-        <label for="note">Descripción</label>
-        <textarea id="note" class="form-control" rows="3"></textarea>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <div class="clearfix">
-      <div class="float-left">
-        <button class="btn btn-default text-danger" (click)="policyDetailsModalRef.hide()">Eliminar</button>
-      </div>
-      <div class="float-right">
-        <button class="btn btn-default" (click)="policyDetailsModalRef.hide()">Cancel</button>
-        <button class="btn btn-primary">Actualizar</button>
-      </div>
-    </div>
-  </div>
+  </section>
+  <section class="modal-body">
+    <section class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="ingrese el nombre de la poliza" [(ngModel)]="editPolicyEditor.name"
+             [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
+      <!--<section *ngIf="editPolicyEditor.error" class="invalid-feedback">
+    {{ editPolicyEditor.error }}
+  </section>-->
+    </section>
+    <section class="form-group">
+      <label for="note">Descripción</label>
+      <textarea id="note" class="form-control" rows="2" [(ngModel)]="editPolicyEditor.description" placeholder="ingrese la descripcion..."></textarea>
+    </section>
+    <section class="form-group">
+      <label for="coverageTypeId">Tipo de cobertura</label>
+      <select class="form-control" id="coverageTypeId" [(ngModel)]="editPolicyEditor.coverageTypeId">
+        <option [ngValue]="item.id" *ngFor="let item of coverageTypeVm.coverageTypes">{{ item.name }}</option>
+      </select>
+    </section>
+    <section class="form-group">
+      <label for="coverage">Porcentaje de Cobertura %</label>
+      <input type="text" width="50" class="form-control" id="coverage" placeholder="ingrese la cobertura..." [(ngModel)]="editPolicyEditor.coverage"
+             [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
+    </section>
+    <section class="form-group">
+      <label for="coverageStart">Inicio de la cobertura</label>
+      <input type="text"
+             [(ngModel)]="editPolicyEditor.coverageStart"
+             id="coverageStart"
+             placeholder="yyyy-mm-dd"
+             class="form-control"
+             bsDatepicker
+             [bsConfig]="{ isAnimated: true }">
+    </section>
+    <section class="form-group">
+      <label for="coveragePeriod">Periodo de cobertura en meses</label>
+      <input type="text" class="form-control" id="coveragePeriod" placeholder="ingrese el periodo de cobertura..." [(ngModel)]="editPolicyEditor.coveragePeriod"
+             [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
+    </section>
+    <section class="form-group">
+      <label for="policyValue">Valor de la cobertua</label>
+      <input type="text" class="form-control" id="policyValue" placeholder="ingrese el valor de cobertura..." [(ngModel)]="editPolicyEditor.policyValue"
+             [ngClass]="{ 'is-invalid': editPolicyEditor.error }" />
+    </section>
+    <section class="form-group">
+      <label for="riskType">Tipo de Riesgo</label>
+      <select class="form-control" id="riskType" [(ngModel)]="editPolicyEditor.riksType">
+        <option [ngValue]="0">Bajo</option>
+        <option [ngValue]="1">Medio</option>
+        <option [ngValue]="2">Medio-Alto</option>
+        <option [ngValue]="3">Alto</option>
+      </select>
+    </section>
+  </section>
+  <section class="modal-footer">
+    <section class="clearfix">
+      <section class="float-left">
+        <button class="btn btn-default text-danger" (click)="deletePolicy()">Eliminar</button>
+      </section>
+      <section class="float-right">
+        <button class="btn btn-default" (click)="editpolicyModalRef.hide()">Cancel</button>
+        <button class="btn btn-primary" (click)="updatePolicy()">Actualizar</button>
+      </section>
+    </section>
+  </section>
+</ng-template>
+
+<ng-template #newPolicyModalTemplate>
+  <section class="modal-header clearfix">
+    <h4 class="modal-title float-left">Nueva Poliza</h4>
+    <button type="button" class="close float-right" aria-label="Close" (click)="newPolicyCancelled()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </section>
+  <section class="modal-body">
+    <section class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="ingrese el nombre de la poliza" [(ngModel)]="newPolicyEditor.n
+             ame"
+             [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
+      <!--<section *ngIf="newPolicyEditor.error" class="invalid-feedback">
+      {{ newPolicyEditor.error }}
+    </section>-->
+    </section>
+    <section class="form-group">
+      <label for="note">Descripción</label>
+      <textarea id="note" class="form-control" rows="2" [(ngModel)]="newPolicyEditor.description" placeholder="ingrese la descripcion..."></textarea>
+    </section>
+    <section class="form-group">
+      <label for="coverageTypeId">Tipo de cobertura</label>
+      <select class="form-control" id="coverageTypeId" [(ngModel)]="newPolicyEditor.coverageTypeId">
+        <option [ngValue]="item.id" *ngFor="let item of coverageTypeVm.coverageTypes">{{ item.name }}</option>
+      </select>
+    </section>
+    <section class="form-group">
+      <label for="coverage">Porcentaje de Cobertura %</label>
+      <input type="text" width="50" class="form-control" id="coverage" placeholder="ingrese la cobertura..." [(ngModel)]="newPolicyEditor.coverage"
+             [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
+    </section>
+    <section class="form-group">
+      <label for="coverageStart">Inicio de la cobertura</label>
+      <input type="text"
+             [(ngModel)]="newPolicyEditor.coverageStart"
+             id="coverageStart"
+             placeholder="yyyy-mm-dd"
+             class="form-control"
+             bsDatepicker
+             [bsConfig]="{ isAnimated: true }">     
+    </section>
+    <section class="form-group">
+      <label for="coveragePeriod">Periodo de cobertura en meses</label>
+      <input type="text" class="form-control" id="coveragePeriod" placeholder="ingrese el periodo de cobertura..." [(ngModel)]="newPolicyEditor.coveragePeriod"
+             [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
+    </section>
+    <section class="form-group">
+      <label for="policyValue">Valor de la cobertua</label>
+      <input type="text" class="form-control" id="policyValue" placeholder="ingrese el valor de cobertura..." [(ngModel)]="newPolicyEditor.policyValue"
+             [ngClass]="{ 'is-invalid': newPolicyEditor.error }" />
+    </section>
+    <section class="form-group">
+      <label for="riskType">Tipo de Riesgo</label>
+      <select class="form-control" id="riskType" [(ngModel)]="newPolicyEditor.riksType">
+        <option [ngValue]="0">Bajo</option>
+        <option [ngValue]="1">Medio</option>
+        <option [ngValue]="2">Medio-Alto</option>
+        <option [ngValue]="3">Alto</option>
+      </select>
+    </section>
+  </section>
+  <section class="modal-footer">
+    <section class="text-right">
+      <button class="btn btn-default" (click)="newPolicyCancelled()">Cancelar</button>
+      <button class="btn btn-primary" (click)="addPolicy()">Crear</button>
+    </section>
+  </section>
 </ng-template>
