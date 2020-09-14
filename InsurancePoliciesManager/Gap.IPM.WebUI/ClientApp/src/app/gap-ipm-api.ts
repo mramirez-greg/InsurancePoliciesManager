@@ -237,6 +237,179 @@ export class CoverageTypeClient implements ICoverageTypeClient {
     }
 }
 
+export interface ICustomerClient {
+    get(): Observable<CustomersListVm>;
+    create(command: CreateCustomerCommand): Observable<string>;
+    update(id: string | null, command: UpdateCustomerCommand): Observable<FileResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class CustomerClient implements ICustomerClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    get(): Observable<CustomersListVm> {
+        let url_ = this.baseUrl + "/api/Customer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<CustomersListVm>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CustomersListVm>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<CustomersListVm> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CustomersListVm.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CustomersListVm>(<any>null);
+    }
+
+    create(command: CreateCustomerCommand): Observable<string> {
+        let url_ = this.baseUrl + "/api/Customer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    update(id: string | null, command: UpdateCustomerCommand): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Customer/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse>(<any>null);
+    }
+}
+
 export interface IInsurancePolicyClient {
     get(): Observable<InsurancePoliciesListVm>;
     create(command: CreateInsurancePolicyCommand): Observable<number>;
@@ -688,6 +861,254 @@ export class UpdateCoverageTypeCommand implements IUpdateCoverageTypeCommand {
 export interface IUpdateCoverageTypeCommand {
     coverageTypeId?: number;
     coverageTypeName?: string | undefined;
+}
+
+export class CustomersListVm implements ICustomersListVm {
+    customers?: CustomersLookupDto[] | undefined;
+
+    constructor(data?: ICustomersListVm) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["customers"])) {
+                this.customers = [] as any;
+                for (let item of _data["customers"])
+                    this.customers!.push(CustomersLookupDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CustomersListVm {
+        data = typeof data === 'object' ? data : {};
+        let result = new CustomersListVm();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.customers)) {
+            data["customers"] = [];
+            for (let item of this.customers)
+                data["customers"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ICustomersListVm {
+    customers?: CustomersLookupDto[] | undefined;
+}
+
+export class CustomersLookupDto implements ICustomersLookupDto {
+    customerId?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    address?: string | undefined;
+    phone?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    country?: string | undefined;
+    postalCode?: string | undefined;
+
+    constructor(data?: ICustomersLookupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.customerId = _data["customerId"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.address = _data["address"];
+            this.phone = _data["phone"];
+            this.city = _data["city"];
+            this.region = _data["region"];
+            this.country = _data["country"];
+            this.postalCode = _data["postalCode"];
+        }
+    }
+
+    static fromJS(data: any): CustomersLookupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CustomersLookupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["customerId"] = this.customerId;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["address"] = this.address;
+        data["phone"] = this.phone;
+        data["city"] = this.city;
+        data["region"] = this.region;
+        data["country"] = this.country;
+        data["postalCode"] = this.postalCode;
+        return data; 
+    }
+}
+
+export interface ICustomersLookupDto {
+    customerId?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    address?: string | undefined;
+    phone?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    country?: string | undefined;
+    postalCode?: string | undefined;
+}
+
+export class CreateCustomerCommand implements ICreateCustomerCommand {
+    customerId?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    address?: string | undefined;
+    phone?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    country?: string | undefined;
+    postalCode?: string | undefined;
+
+    constructor(data?: ICreateCustomerCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.customerId = _data["customerId"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.address = _data["address"];
+            this.phone = _data["phone"];
+            this.city = _data["city"];
+            this.region = _data["region"];
+            this.country = _data["country"];
+            this.postalCode = _data["postalCode"];
+        }
+    }
+
+    static fromJS(data: any): CreateCustomerCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateCustomerCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["customerId"] = this.customerId;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["address"] = this.address;
+        data["phone"] = this.phone;
+        data["city"] = this.city;
+        data["region"] = this.region;
+        data["country"] = this.country;
+        data["postalCode"] = this.postalCode;
+        return data; 
+    }
+}
+
+export interface ICreateCustomerCommand {
+    customerId?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    address?: string | undefined;
+    phone?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    country?: string | undefined;
+    postalCode?: string | undefined;
+}
+
+export class UpdateCustomerCommand implements IUpdateCustomerCommand {
+    customerId?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    address?: string | undefined;
+    phone?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    country?: string | undefined;
+    postalCode?: string | undefined;
+
+    constructor(data?: IUpdateCustomerCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.customerId = _data["customerId"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.address = _data["address"];
+            this.phone = _data["phone"];
+            this.city = _data["city"];
+            this.region = _data["region"];
+            this.country = _data["country"];
+            this.postalCode = _data["postalCode"];
+        }
+    }
+
+    static fromJS(data: any): UpdateCustomerCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateCustomerCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["customerId"] = this.customerId;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["address"] = this.address;
+        data["phone"] = this.phone;
+        data["city"] = this.city;
+        data["region"] = this.region;
+        data["country"] = this.country;
+        data["postalCode"] = this.postalCode;
+        return data; 
+    }
+}
+
+export interface IUpdateCustomerCommand {
+    customerId?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    address?: string | undefined;
+    phone?: string | undefined;
+    city?: string | undefined;
+    region?: string | undefined;
+    country?: string | undefined;
+    postalCode?: string | undefined;
 }
 
 export class InsurancePoliciesListVm implements IInsurancePoliciesListVm {

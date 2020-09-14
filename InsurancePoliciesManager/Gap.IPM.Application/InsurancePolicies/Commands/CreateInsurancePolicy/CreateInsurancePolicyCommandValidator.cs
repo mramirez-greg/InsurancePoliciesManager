@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 using Gap.IPM.Domain.Enums;
 
 namespace Gap.IPM.Application.InsurancePolicies.Commands.CreateInsurancePolicy
@@ -26,7 +25,7 @@ namespace Gap.IPM.Application.InsurancePolicies.Commands.CreateInsurancePolicy
 
             //business rule for application defined by GAP's Exercise document
             When(v => v.RiksType.Equals(RiskType.High), () => {
-                RuleFor(v => v.Coverage).LessThanOrEqualTo(50).WithMessage("Coverage percentage can't be greater than 50");
+                RuleFor(v => v.Coverage).LessThanOrEqualTo(0.5M).WithMessage("Coverage percentage can't be greater than 50");
             });            
         }
     }
